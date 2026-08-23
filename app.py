@@ -11,7 +11,7 @@ import json
 # ============================================================
 
 st.set_page_config(
-    page_title="Enumeration Dashboard",
+    page_title="ANAIMALAI TALUK-CENSUS Enumeration Dashboard",
     page_icon="📋",
     layout="wide",
     initial_sidebar_state="expanded"
