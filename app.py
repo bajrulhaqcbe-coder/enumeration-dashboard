@@ -19,7 +19,7 @@ st.set_page_config(
 
 
 # ============================================================
-# GOOGLE SHEET CONFIGURATION
+# GOOGLE SHEET CONFIG
 # ============================================================
 
 SHEET_ID = "1vmxjbYABVPbu5PUVSLQO0H8J3TTflyTgGKOj5nH9Q14"
@@ -51,7 +51,7 @@ ADMIN_PASSWORD = "admin123"
 
 
 # ============================================================
-# MAIN COLUMN
+# COLUMN
 # ============================================================
 
 HLB_COLUMN = "HLB NUMBER-ENUMERATOR NAME"
@@ -76,6 +76,12 @@ st.markdown(
         text-align: center;
         color: #666;
         margin-bottom: 25px;
+    }
+
+    div[data-testid="stMetric"] {
+        border: 1px solid #dddddd;
+        border-radius: 10px;
+        padding: 10px;
     }
 
     </style>
@@ -109,7 +115,9 @@ def load_google_sheet():
 
     except Exception as e:
 
-        st.error("Google Sheet data could not be loaded.")
+        st.error(
+            "Google Sheet data could not be loaded."
+        )
 
         st.code(str(e))
 
@@ -125,7 +133,9 @@ df = load_google_sheet()
 
 if df.empty:
 
-    st.error("No data found in Google Sheet.")
+    st.error(
+        "No data found in Google Sheet."
+    )
 
     st.stop()
 
@@ -145,7 +155,7 @@ if HLB_COLUMN not in df.columns:
 
 
 # ============================================================
-# STATUS NORMALIZATION
+# STATUS
 # ============================================================
 
 if "STATUS" not in df.columns:
@@ -187,7 +197,7 @@ not_started = len(
 
 
 # ============================================================
-# TOTAL PENDING
+# PENDING
 # ============================================================
 
 total_pending = 0
@@ -205,7 +215,7 @@ if "PENDING" in df.columns:
 
 
 # ============================================================
-# OVERALL PROGRESS
+# PROGRESS
 # ============================================================
 
 progress_percentage = (
@@ -216,7 +226,7 @@ progress_percentage = (
 
 
 # ============================================================
-# HELPER
+# GET VALUE
 # ============================================================
 
 def get_value(record, column):
@@ -235,7 +245,7 @@ def get_value(record, column):
 
 
 # ============================================================
-# GOOGLE APPS SCRIPT UPDATE
+# SAVE TO GOOGLE APPS SCRIPT
 # ============================================================
 
 def send_update(payload):
@@ -282,7 +292,7 @@ def send_update(payload):
 
 
 # ============================================================
-# COMMON DASHBOARD
+# OVERALL PROGRESS
 # ============================================================
 
 def show_overall_progress():
@@ -371,7 +381,7 @@ def show_overall_progress():
         chart_data,
         names="Status",
         values="Count",
-        hole=0.40,
+        hole=0.42,
         title="Enumerator Status"
     )
 
@@ -382,6 +392,17 @@ def show_overall_progress():
     )
 
 
+    fig.update_layout(
+        height=450,
+        margin=dict(
+            l=20,
+            r=20,
+            t=60,
+            b=20
+        )
+    )
+
+
     st.plotly_chart(
         fig,
         width="stretch"
@@ -389,17 +410,13 @@ def show_overall_progress():
 
 
 # ============================================================
-# SEARCH + FILTER + STATUS TABLE
+# ENUMERATOR SEARCH + FILTER + STATUS
 # ============================================================
 
 def show_enumerator_status():
 
     st.divider()
 
-
-    # ========================================================
-    # SEARCH
-    # ========================================================
 
     st.markdown(
         "### 🔎 Enumerator Search & Filter"
@@ -413,7 +430,7 @@ def show_enumerator_status():
 
         search = st.text_input(
             "Search HLB / Enumerator / Village",
-            key="status_search"
+            key=f"search_{st.session_state.get('page_mode', 'default')}"
         )
 
 
@@ -427,7 +444,7 @@ def show_enumerator_status():
                 "IN PROGRESS",
                 "NOT STARTED"
             ],
-            key="status_filter"
+            key=f"filter_{st.session_state.get('page_mode', 'default')}"
         )
 
 
@@ -435,7 +452,7 @@ def show_enumerator_status():
 
 
     # ========================================================
-    # SEARCH FILTER
+    # SEARCH
     # ========================================================
 
     if search:
@@ -453,7 +470,6 @@ def show_enumerator_status():
                 axis=1
             )
         )
-
 
         display_df = display_df[
             mask
@@ -511,7 +527,8 @@ def show_enumerator_status():
 
 
     table_columns = [
-        c for c in table_columns
+        c
+        for c in table_columns
         if c in display_df.columns
     ]
 
@@ -538,7 +555,6 @@ def show_enumerator_status():
 st.sidebar.title(
     "📋 Enumeration"
 )
-
 
 st.sidebar.markdown("---")
 
@@ -573,7 +589,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
 st.markdown(
     '<div class="sub-title">'
     'Enumeration Monitoring & Progress System'
@@ -588,26 +603,11 @@ st.markdown(
 
 if mode == "👤 Enumerator":
 
-
-    # ========================================================
-    # 1. OVERALL PROGRESS
-    # ========================================================
-
-    show_overall_progress()
+    st.session_state.page_mode = "enumerator"
 
 
     # ========================================================
-    # 2. ENUMERATOR SEARCH & FILTER
-    # ========================================================
-
-    show_enumerator_status()
-
-
-    st.divider()
-
-
-    # ========================================================
-    # ENUMERATOR UPDATE
+    # ENUMERATOR UPDATE - ALWAYS OPEN
     # ========================================================
 
     st.markdown(
@@ -758,11 +758,10 @@ if mode == "👤 Enumerator":
 
 
     # ========================================================
-    # COMPLETED LOCK
+    # COMPLETED
     # ========================================================
 
     if current_status == "COMPLETED":
-
 
         st.success(
             "🔒 This Enumerator is COMPLETED and LOCKED."
@@ -790,7 +789,7 @@ if mode == "👤 Enumerator":
 
         if remarks:
 
-            st.write(
+            st.markdown(
                 "**Remarks:**"
             )
 
@@ -799,12 +798,11 @@ if mode == "👤 Enumerator":
             )
 
 
+    # ========================================================
+    # UPDATE FORM
+    # ========================================================
+
     else:
-
-
-        # ====================================================
-        # UPDATE FORM
-        # ====================================================
 
         st.markdown(
             "### 📝 Update Enumeration"
@@ -843,9 +841,9 @@ if mode == "👤 Enumerator":
         )
 
 
-        # ====================================================
+        # ----------------------------------------------------
         # PENDING
-        # ====================================================
+        # ----------------------------------------------------
 
         current_pending = 0
 
@@ -872,23 +870,25 @@ if mode == "👤 Enumerator":
             "Pending Count",
             min_value=0,
             value=current_pending,
-            step=1
+            step=1,
+            key="pending_count"
         )
 
 
-        # ====================================================
+        # ----------------------------------------------------
         # EXPECTED DATE
-        # ====================================================
+        # ----------------------------------------------------
 
         expected_date = st.date_input(
             "Expected Completion Date",
-            value=date.today()
+            value=date.today(),
+            key="expected_date"
         )
 
 
-        # ====================================================
+        # ----------------------------------------------------
         # REMARKS
-        # ====================================================
+        # ----------------------------------------------------
 
         current_remarks = get_value(
             record,
@@ -902,24 +902,22 @@ if mode == "👤 Enumerator":
             height=130,
             placeholder=(
                 "Enter detailed reason..."
-            )
+            ),
+            key="remarks"
         )
 
 
-        # ====================================================
+        # ----------------------------------------------------
         # SAVE
-        # ====================================================
+        # ----------------------------------------------------
 
         if st.button(
             "💾 UPDATE ENUMERATION",
             type="primary",
-            width="stretch"
+            width="stretch",
+            key="save_enum"
         ):
 
-
-            # ------------------------------------------------
-            # IN PROGRESS VALIDATION
-            # ------------------------------------------------
 
             if status == "IN PROGRESS":
 
@@ -941,10 +939,6 @@ if mode == "👤 Enumerator":
 
                     st.stop()
 
-
-            # ------------------------------------------------
-            # COMPLETED
-            # ------------------------------------------------
 
             if status == "COMPLETED":
 
@@ -1034,11 +1028,40 @@ if mode == "👤 Enumerator":
                     )
 
 
+    # ========================================================
+    # DASHBOARD MENU
+    # ========================================================
+
+    st.divider()
+
+
+    with st.expander(
+        "📊 ENUMERATION PROGRESS DASHBOARD",
+        expanded=False
+    ):
+
+
+        # ====================================================
+        # 1. OVERALL PROGRESS
+        # ====================================================
+
+        show_overall_progress()
+
+
+        # ====================================================
+        # 2. SEARCH & FILTER
+        # ====================================================
+
+        show_enumerator_status()
+
+
 # ============================================================
 # ADMIN MODE
 # ============================================================
 
 else:
+
+    st.session_state.page_mode = "admin"
 
 
     # ========================================================
@@ -1079,11 +1102,9 @@ else:
 
 
             if (
-                username
-                == ADMIN_USERNAME
+                username == ADMIN_USERNAME
                 and
-                password
-                == ADMIN_PASSWORD
+                password == ADMIN_PASSWORD
             ):
 
                 st.session_state.admin_logged_in = True
@@ -1106,7 +1127,7 @@ else:
 
 
     # ========================================================
-    # ADMIN DASHBOARD
+    # ADMIN HEADER
     # ========================================================
 
     a1, a2 = st.columns(
@@ -1133,15 +1154,11 @@ else:
 
 
     # ========================================================
-    # 1. OVERALL PROGRESS
+    # ADMIN DASHBOARD
     # ========================================================
 
     show_overall_progress()
 
-
-    # ========================================================
-    # 2. SEARCH & FILTER
-    # ========================================================
 
     show_enumerator_status()
 
