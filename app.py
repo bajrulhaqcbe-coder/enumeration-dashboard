@@ -78,6 +78,13 @@ st.markdown(
         margin-bottom: 25px;
     }
 
+    .update-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+
     </style>
     """,
     unsafe_allow_html=True
@@ -110,7 +117,6 @@ def load_google_sheet():
     except Exception as e:
 
         st.error("Google Sheet data could not be loaded.")
-
         st.code(str(e))
 
         return pd.DataFrame()
@@ -126,7 +132,6 @@ df = load_google_sheet()
 if df.empty:
 
     st.error("No data found in Google Sheet.")
-
     st.stop()
 
 
@@ -222,13 +227,11 @@ progress_percentage = (
 def get_value(record, column):
 
     if column not in df.columns:
-
         return ""
 
     value = record[column]
 
     if pd.isna(value):
-
         return ""
 
     return str(value).strip()
@@ -244,7 +247,6 @@ def send_update(payload):
         payload
     ).encode("utf-8")
 
-
     request = urllib.request.Request(
         APPS_SCRIPT_URL,
         data=data,
@@ -253,7 +255,6 @@ def send_update(payload):
         },
         method="POST"
     )
-
 
     with urllib.request.urlopen(
         request,
@@ -265,7 +266,6 @@ def send_update(payload):
             .read()
             .decode("utf-8")
         )
-
 
     try:
 
@@ -291,9 +291,7 @@ def show_overall_progress():
         "### 📊 Overall Progress"
     )
 
-
     c1, c2, c3, c4, c5 = st.columns(5)
-
 
     with c1:
 
@@ -302,14 +300,12 @@ def show_overall_progress():
             total
         )
 
-
     with c2:
 
         st.metric(
             "🟢 COMPLETED",
             completed
         )
-
 
     with c3:
 
@@ -318,14 +314,12 @@ def show_overall_progress():
             in_progress
         )
 
-
     with c4:
 
         st.metric(
             "🔴 NOT STARTED",
             not_started
         )
-
 
     with c5:
 
@@ -334,17 +328,14 @@ def show_overall_progress():
             total_pending
         )
 
-
     st.progress(
         int(progress_percentage)
     )
-
 
     st.markdown(
         f"**Overall Enumeration Progress: "
         f"{progress_percentage:.1f}%**"
     )
-
 
     # ========================================================
     # PIE CHART
@@ -366,7 +357,6 @@ def show_overall_progress():
 
     })
 
-
     fig = px.pie(
         chart_data,
         names="Status",
@@ -375,12 +365,10 @@ def show_overall_progress():
         title="Enumerator Status"
     )
 
-
     fig.update_traces(
         textinfo="label+percent",
         textposition="inside"
     )
-
 
     st.plotly_chart(
         fig,
@@ -396,7 +384,6 @@ def show_enumerator_status():
 
     st.divider()
 
-
     # ========================================================
     # SEARCH
     # ========================================================
@@ -405,9 +392,7 @@ def show_enumerator_status():
         "### 🔎 Enumerator Search & Filter"
     )
 
-
     f1, f2 = st.columns(2)
-
 
     with f1:
 
@@ -415,7 +400,6 @@ def show_enumerator_status():
             "Search HLB / Enumerator / Village",
             key="status_search"
         )
-
 
     with f2:
 
@@ -430,9 +414,7 @@ def show_enumerator_status():
             key="status_filter"
         )
 
-
     display_df = df.copy()
-
 
     # ========================================================
     # SEARCH FILTER
@@ -454,11 +436,9 @@ def show_enumerator_status():
             )
         )
 
-
         display_df = display_df[
             mask
         ]
-
 
     # ========================================================
     # STATUS FILTER
@@ -471,7 +451,6 @@ def show_enumerator_status():
             == status_filter
         ]
 
-
     # ========================================================
     # TABLE
     # ========================================================
@@ -479,7 +458,6 @@ def show_enumerator_status():
     st.markdown(
         "### 📋 Enumerator Status"
     )
-
 
     table_columns = [
 
@@ -509,12 +487,10 @@ def show_enumerator_status():
 
     ]
 
-
     table_columns = [
         c for c in table_columns
         if c in display_df.columns
     ]
-
 
     st.dataframe(
         display_df[
@@ -524,7 +500,6 @@ def show_enumerator_status():
         hide_index=True
     )
 
-
     st.caption(
         f"Showing {len(display_df)} "
         f"of {total} HLB records"
@@ -532,88 +507,26 @@ def show_enumerator_status():
 
 
 # ============================================================
-# SIDEBAR
+# ENUMERATOR UPDATE
 # ============================================================
 
-st.sidebar.title(
-    "📋 Enumeration"
-)
-
-
-st.sidebar.markdown("---")
-
-
-mode = st.sidebar.radio(
-    "Select Mode",
-    [
-        "👤 Enumerator",
-        "🔐 Admin"
-    ]
-)
-
-
-if st.sidebar.button(
-    "🔄 Refresh Data",
-    width="stretch"
-):
-
-    st.cache_data.clear()
-
-    st.rerun()
-
-
-# ============================================================
-# HEADER
-# ============================================================
-
-st.markdown(
-    '<div class="main-title">'
-    '📋 ANAIMALAI TALUK -CENSUS ENUMERATION PROGRESS DASHBOARD'
-    '</div>',
-    unsafe_allow_html=True
-)
-
-
-st.markdown(
-    '<div class="sub-title">'
-    'Enumeration Monitoring & Progress System'
-    '</div>',
-    unsafe_allow_html=True
-)
-
-
-# ============================================================
-# ENUMERATOR MODE
-# ============================================================
-
-if mode == "👤 Enumerator":
-
-
-    # ========================================================
-    # 1. OVERALL PROGRESS
-    # ========================================================
-
-    show_overall_progress()
-
-
-    # ========================================================
-    # 2. ENUMERATOR SEARCH & FILTER
-    # ========================================================
-
-    show_enumerator_status()
-
-
-    st.divider()
-
-
-    # ========================================================
-    # ENUMERATOR UPDATE
-    # ========================================================
+def show_enumerator_update():
 
     st.markdown(
-        "## 👤 Enumerator Update"
+        '<div class="update-title">'
+        '👤 Enumerator Update'
+        '</div>',
+        unsafe_allow_html=True
     )
 
+    st.info(
+        "Select your HLB / Enumerator and update the "
+        "current enumeration progress."
+    )
+
+    # ========================================================
+    # ENUMERATOR LIST
+    # ========================================================
 
     enumerators = (
         df[HLB_COLUMN]
@@ -622,6 +535,10 @@ if mode == "👤 Enumerator":
         .tolist()
     )
 
+    enumerators = [
+        x for x in enumerators
+        if x
+    ]
 
     selected = st.selectbox(
         "Select HLB Number - Enumerator Name",
@@ -629,6 +546,9 @@ if mode == "👤 Enumerator":
         key="enum_selector"
     )
 
+    # ========================================================
+    # SELECTED RECORD
+    # ========================================================
 
     selected_rows = df[
         df[HLB_COLUMN]
@@ -637,29 +557,23 @@ if mode == "👤 Enumerator":
         == selected
     ]
 
-
     if selected_rows.empty:
 
         st.error(
             "Enumerator not found."
         )
 
-        st.stop()
-
+        return
 
     record = selected_rows.iloc[0]
-
 
     current_status = get_value(
         record,
         "STATUS"
     ).upper()
 
-
     if not current_status:
-
         current_status = "NOT STARTED"
-
 
     # ========================================================
     # CURRENT STATUS
@@ -683,7 +597,6 @@ if mode == "👤 Enumerator":
             "🔴 NOT STARTED"
         )
 
-
     # ========================================================
     # DETAILS
     # ========================================================
@@ -692,18 +605,16 @@ if mode == "👤 Enumerator":
         "### 📌 Enumerator Details"
     )
 
-
     col1, col2 = st.columns(2)
-
 
     with col1:
 
         st.text_input(
             "HLB Number - Enumerator",
             value=selected,
-            disabled=True
+            disabled=True,
+            key="detail_hlb"
         )
-
 
         st.text_input(
             "Circle Number",
@@ -711,9 +622,9 @@ if mode == "👤 Enumerator":
                 record,
                 "CIRCLE NUMBER"
             ),
-            disabled=True
+            disabled=True,
+            key="detail_circle"
         )
-
 
         st.text_input(
             "Supervisor Name & Mobile",
@@ -721,9 +632,9 @@ if mode == "👤 Enumerator":
                 record,
                 "SUPERVISOR NAME & MOBILE NUMBER"
             ),
-            disabled=True
+            disabled=True,
+            key="detail_supervisor"
         )
-
 
         st.text_input(
             "Enumerator Mobile",
@@ -731,9 +642,9 @@ if mode == "👤 Enumerator":
                 record,
                 "ENUMERATOR MOBILE NUMBER"
             ),
-            disabled=True
+            disabled=True,
+            key="detail_mobile"
         )
-
 
     with col2:
 
@@ -743,9 +654,9 @@ if mode == "👤 Enumerator":
                 record,
                 "VILLAGE NAME"
             ),
-            disabled=True
+            disabled=True,
+            key="detail_village"
         )
-
 
         st.text_area(
             "HLB Description",
@@ -753,9 +664,9 @@ if mode == "👤 Enumerator":
                 record,
                 "HLB DESCRIPTION"
             ),
-            disabled=True
+            disabled=True,
+            key="detail_description"
         )
-
 
     # ========================================================
     # COMPLETED LOCK
@@ -763,17 +674,14 @@ if mode == "👤 Enumerator":
 
     if current_status == "COMPLETED":
 
-
         st.success(
             "🔒 This Enumerator is COMPLETED and LOCKED."
         )
-
 
         completed_date = get_value(
             record,
             "COMPLETED DATE"
         )
-
 
         if completed_date:
 
@@ -781,12 +689,10 @@ if mode == "👤 Enumerator":
                 f"Completed Date: {completed_date}"
             )
 
-
         remarks = get_value(
             record,
             "REMARKS"
         )
-
 
         if remarks:
 
@@ -798,240 +704,325 @@ if mode == "👤 Enumerator":
                 remarks
             )
 
+        return
 
-    else:
+    # ========================================================
+    # UPDATE FORM
+    # ========================================================
 
+    st.markdown(
+        "### 📝 Update Enumeration"
+    )
 
-        # ====================================================
-        # UPDATE FORM
-        # ====================================================
+    status_options = [
 
-        st.markdown(
-            "### 📝 Update Enumeration"
+        "NOT STARTED",
+
+        "IN PROGRESS",
+
+        "COMPLETED"
+
+    ]
+
+    try:
+
+        default_index = (
+            status_options.index(
+                current_status
+            )
         )
 
+    except ValueError:
 
-        status_options = [
+        default_index = 0
 
-            "NOT STARTED",
+    status = st.selectbox(
+        "Status",
+        status_options,
+        index=default_index,
+        key="update_status"
+    )
 
-            "IN PROGRESS",
+    # ========================================================
+    # PENDING
+    # ========================================================
 
-            "COMPLETED"
+    current_pending = 0
 
-        ]
-
+    if "PENDING" in df.columns:
 
         try:
 
-            default_index = (
-                status_options.index(
-                    current_status
+            current_pending = int(
+                float(
+                    get_value(
+                        record,
+                        "PENDING"
+                    ) or 0
                 )
             )
 
-        except ValueError:
+        except:
 
-            default_index = 0
+            current_pending = 0
 
+    pending = st.number_input(
+        "Pending Count",
+        min_value=0,
+        value=current_pending,
+        step=1,
+        key="update_pending"
+    )
 
-        status = st.selectbox(
-            "Status",
-            status_options,
-            index=default_index,
-            key="update_status"
-        )
+    # ========================================================
+    # EXPECTED DATE
+    # ========================================================
 
+    existing_expected = get_value(
+        record,
+        "EXPECTED DATE"
+    )
 
-        # ====================================================
-        # PENDING
-        # ====================================================
+    expected_default = date.today()
 
-        current_pending = 0
+    if existing_expected:
 
+        try:
 
-        if "PENDING" in df.columns:
+            expected_default = pd.to_datetime(
+                existing_expected,
+                dayfirst=True
+            ).date()
+
+        except:
+
+            expected_default = date.today()
+
+    expected_date = st.date_input(
+        "Expected Completion Date",
+        value=expected_default,
+        key="update_expected_date"
+    )
+
+    # ========================================================
+    # REMARKS
+    # ========================================================
+
+    current_remarks = get_value(
+        record,
+        "REMARKS"
+    )
+
+    remarks = st.text_area(
+        "Remarks / Reason for Pending",
+        value=current_remarks,
+        height=130,
+        placeholder=(
+            "Enter detailed reason / "
+            "how many entries are still pending..."
+        ),
+        key="update_remarks"
+    )
+
+    # ========================================================
+    # SAVE
+    # ========================================================
+
+    if st.button(
+        "💾 UPDATE ENUMERATION",
+        type="primary",
+        width="stretch",
+        key="save_enumerator_update"
+    ):
+
+        # ----------------------------------------------------
+        # IN PROGRESS VALIDATION
+        # ----------------------------------------------------
+
+        if status == "IN PROGRESS":
+
+            if pending <= 0:
+
+                st.error(
+                    "⚠️ Pending Count is required."
+                )
+
+                return
+
+            if not remarks.strip():
+
+                st.error(
+                    "⚠️ Remarks are required "
+                    "for IN PROGRESS."
+                )
+
+                return
+
+        # ----------------------------------------------------
+        # COMPLETED
+        # ----------------------------------------------------
+
+        if status == "COMPLETED":
+
+            pending = 0
+
+        # ----------------------------------------------------
+        # PAYLOAD
+        # ----------------------------------------------------
+
+        payload = {
+
+            "hlb":
+                selected,
+
+            "circle":
+                get_value(
+                    record,
+                    "CIRCLE NUMBER"
+                ),
+
+            "enumerator":
+                selected,
+
+            "status":
+                status,
+
+            "pending":
+                pending,
+
+            "expected_date":
+                expected_date.strftime(
+                    "%d-%m-%Y"
+                ),
+
+            "remarks":
+                remarks.strip()
+
+        }
+
+        # ----------------------------------------------------
+        # SEND TO GOOGLE SHEET
+        # ----------------------------------------------------
+
+        with st.spinner(
+            "Saving to Google Sheet..."
+        ):
 
             try:
 
-                current_pending = int(
-                    float(
-                        get_value(
-                            record,
-                            "PENDING"
-                        ) or 0
-                    )
+                result = send_update(
+                    payload
                 )
 
-            except:
+                if result.get(
+                    "success"
+                ):
 
-                current_pending = 0
-
-
-        pending = st.number_input(
-            "Pending Count",
-            min_value=0,
-            value=current_pending,
-            step=1
-        )
-
-
-        # ====================================================
-        # EXPECTED DATE
-        # ====================================================
-
-        expected_date = st.date_input(
-            "Expected Completion Date",
-            value=date.today()
-        )
-
-
-        # ====================================================
-        # REMARKS
-        # ====================================================
-
-        current_remarks = get_value(
-            record,
-            "REMARKS"
-        )
-
-
-        remarks = st.text_area(
-            "Remarks / Reason for Pending",
-            value=current_remarks,
-            height=130,
-            placeholder=(
-                "Enter detailed reason..."
-            )
-        )
-
-
-        # ====================================================
-        # SAVE
-        # ====================================================
-
-        if st.button(
-            "💾 UPDATE ENUMERATION",
-            type="primary",
-            width="stretch"
-        ):
-
-
-            # ------------------------------------------------
-            # IN PROGRESS VALIDATION
-            # ------------------------------------------------
-
-            if status == "IN PROGRESS":
-
-                if pending <= 0:
-
-                    st.error(
-                        "⚠️ Pending Count is required."
+                    st.success(
+                        "✅ SAVE OK — Google Sheet Updated Successfully."
                     )
 
-                    st.stop()
+                    st.cache_data.clear()
 
+                    st.rerun()
 
-                if not remarks.strip():
-
-                    st.error(
-                        "⚠️ Remarks are required "
-                        "for IN PROGRESS."
-                    )
-
-                    st.stop()
-
-
-            # ------------------------------------------------
-            # COMPLETED
-            # ------------------------------------------------
-
-            if status == "COMPLETED":
-
-                pending = 0
-
-
-            payload = {
-
-                "hlb":
-                    selected,
-
-                "circle":
-                    get_value(
-                        record,
-                        "CIRCLE NUMBER"
-                    ),
-
-                "enumerator":
-                    selected,
-
-                "status":
-                    status,
-
-                "pending":
-                    pending,
-
-                "expected_date":
-                    expected_date.strftime(
-                        "%d-%m-%Y"
-                    ),
-
-                "remarks":
-                    remarks.strip()
-
-            }
-
-
-            with st.spinner(
-                "Saving to Google Sheet..."
-            ):
-
-                try:
-
-                    result = send_update(
-                        payload
-                    )
-
-
-                    if result.get(
-                        "success"
-                    ):
-
-                        st.success(
-                            "✅ SAVE OK"
-                        )
-
-
-                        st.cache_data.clear()
-
-
-                        st.rerun()
-
-
-                    else:
-
-                        st.error(
-                            "❌ SAVE FAILED"
-                        )
-
-
-                        st.code(
-                            result.get(
-                                "message",
-                                "Unknown error"
-                            )
-                        )
-
-
-                except Exception as e:
+                else:
 
                     st.error(
-                        "❌ Connection error"
+                        "❌ SAVE FAILED"
                     )
 
                     st.code(
-                        str(e)
+                        result.get(
+                            "message",
+                            "Unknown error"
+                        )
                     )
+
+            except Exception as e:
+
+                st.error(
+                    "❌ Connection error"
+                )
+
+                st.code(
+                    str(e)
+                )
+
+
+# ============================================================
+# SIDEBAR
+# ============================================================
+
+st.sidebar.title(
+    "📋 Enumeration"
+)
+
+st.sidebar.markdown("---")
+
+mode = st.sidebar.radio(
+    "Select Mode",
+    [
+        "👤 Enumerator",
+        "🔐 Admin"
+    ]
+)
+
+if st.sidebar.button(
+    "🔄 Refresh Data",
+    width="stretch"
+):
+
+    st.cache_data.clear()
+
+    st.rerun()
+
+
+# ============================================================
+# HEADER
+# ============================================================
+
+st.markdown(
+    '<div class="main-title">'
+    '📋 ANAIMALAI TALUK - CENSUS ENUMERATION PROGRESS DASHBOARD'
+    '</div>',
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    '<div class="sub-title">'
+    'Enumeration Monitoring & Progress System'
+    '</div>',
+    unsafe_allow_html=True
+)
+
+
+# ============================================================
+# ENUMERATOR MODE
+# ============================================================
+
+if mode == "👤 Enumerator":
+
+    # ========================================================
+    # 1. ENUMERATOR UPDATE
+    #    THIS IS NOW DIRECTLY BELOW THE TITLE
+    # ========================================================
+
+    show_enumerator_update()
+
+    # ========================================================
+    # 2. OVERALL PROGRESS
+    # ========================================================
+
+    st.divider()
+
+    show_overall_progress()
+
+    # ========================================================
+    # 3. SEARCH + FILTER + TABLE
+    # ========================================================
+
+    show_enumerator_status()
 
 
 # ============================================================
@@ -1039,7 +1030,6 @@ if mode == "👤 Enumerator":
 # ============================================================
 
 else:
-
 
     # ========================================================
     # ADMIN LOGIN
@@ -1052,31 +1042,25 @@ else:
 
         st.session_state.admin_logged_in = False
 
-
     if not st.session_state.admin_logged_in:
-
 
         st.subheader(
             "🔐 Admin Login"
         )
 
-
         username = st.text_input(
             "Admin Username"
         )
-
 
         password = st.text_input(
             "Admin Password",
             type="password"
         )
 
-
         if st.button(
             "🔐 LOGIN",
             type="primary"
         ):
-
 
             if (
                 username
@@ -1094,16 +1078,13 @@ else:
 
                 st.rerun()
 
-
             else:
 
                 st.error(
                     "❌ Invalid username or password."
                 )
 
-
         st.stop()
-
 
     # ========================================================
     # ADMIN DASHBOARD
@@ -1113,13 +1094,11 @@ else:
         [6, 1]
     )
 
-
     with a1:
 
         st.success(
             "🔓 Admin Dashboard"
         )
-
 
     with a2:
 
@@ -1131,20 +1110,17 @@ else:
 
             st.rerun()
 
-
     # ========================================================
-    # 1. OVERALL PROGRESS
+    # ADMIN OVERALL PROGRESS
     # ========================================================
 
     show_overall_progress()
 
-
     # ========================================================
-    # 2. SEARCH & FILTER
+    # ADMIN SEARCH + FILTER
     # ========================================================
 
     show_enumerator_status()
-
 
     # ========================================================
     # DOWNLOAD REPORT
@@ -1152,16 +1128,13 @@ else:
 
     st.divider()
 
-
     st.markdown(
         "### 📥 Export Report"
     )
 
-
     csv_data = df.to_csv(
         index=False
     ).encode("utf-8")
-
 
     st.download_button(
         "⬇️ Download Full Enumeration Report",
@@ -1177,7 +1150,6 @@ else:
 # ============================================================
 
 st.divider()
-
 
 st.caption(
     "Enumeration Dashboard • "
