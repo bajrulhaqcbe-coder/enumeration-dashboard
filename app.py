@@ -568,7 +568,7 @@ if st.sidebar.button(
 
 st.markdown(
     '<div class="main-title">'
-    '📋 ENUMERATION PROGRESS DASHBOARD'
+    '📋 ANAIMALAI TALUK -CENSUS ENUMERATION PROGRESS DASHBOARD'
     '</div>',
     unsafe_allow_html=True
 )
