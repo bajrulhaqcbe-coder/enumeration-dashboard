@@ -15,8 +15,7 @@ from reportlab.platypus import (
     Paragraph,
     Spacer,
     Table,
-    TableStyle,
-    PageBreak
+    TableStyle
 )
 from reportlab.lib.units import mm
 
@@ -34,7 +33,7 @@ st.set_page_config(
 
 
 # ============================================================
-# GOOGLE SHEET CONFIG
+# GOOGLE SHEET
 # ============================================================
 
 SHEET_ID = "1vmxjbYABVPbu5PUVSLQO0H8J3TTflyTgGKOj5nH9Q14"
@@ -65,16 +64,16 @@ HLB_COLUMN = "HLB NUMBER-ENUMERATOR NAME"
 
 
 # ============================================================
-# CSS
+# CUSTOM CSS
 # ============================================================
 
 st.markdown(
     """
 <style>
 
-/* ============================================================
-   HIDE DEFAULT
-   ============================================================ */
+/* =========================================================
+   REMOVE UNNECESSARY STREAMLIT UI
+   ========================================================= */
 
 #MainMenu {
     visibility: hidden;
@@ -89,25 +88,25 @@ footer {
 }
 
 
-/* ============================================================
-   PAGE
-   ============================================================ */
+/* =========================================================
+   MAIN PAGE
+   ========================================================= */
 
 .block-container {
 
-    max-width: 1050px;
+    max-width: 1150px;
 
-    padding-top: 0.2rem;
+    padding-top: 0.25rem;
     padding-bottom: 1rem;
 
-    padding-left: 0.35rem;
-    padding-right: 0.35rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
 }
 
 
-/* ============================================================
+/* =========================================================
    HEADER
-   ============================================================ */
+   ========================================================= */
 
 .hero {
 
@@ -121,16 +120,16 @@ footer {
 
     color: white;
 
-    border-radius: 18px;
+    border-radius: 17px;
 
-    padding: 13px 8px;
+    padding: 12px 8px;
 
     text-align: center;
 
     margin-bottom: 8px;
 
     box-shadow:
-    0 7px 22px rgba(0,0,0,.14);
+    0 6px 20px rgba(0,0,0,.14);
 }
 
 .hero-title {
@@ -152,9 +151,9 @@ footer {
 }
 
 
-/* ============================================================
-   SECTION
-   ============================================================ */
+/* =========================================================
+   SECTION TITLE
+   ========================================================= */
 
 .section-title {
 
@@ -170,9 +169,9 @@ footer {
 }
 
 
-/* ============================================================
+/* =========================================================
    SEARCH
-   ============================================================ */
+   ========================================================= */
 
 .search-box {
 
@@ -193,9 +192,9 @@ footer {
 }
 
 
-/* ============================================================
+/* =========================================================
    INFO CARD
-   ============================================================ */
+   ========================================================= */
 
 .info-card {
 
@@ -236,9 +235,9 @@ footer {
 }
 
 
-/* ============================================================
+/* =========================================================
    STATUS
-   ============================================================ */
+   ========================================================= */
 
 .status-card {
 
@@ -283,9 +282,9 @@ footer {
 }
 
 
-/* ============================================================
-   GIFT CARD
-   ============================================================ */
+/* =========================================================
+   SUCCESS CARD
+   ========================================================= */
 
 .gift-card {
 
@@ -305,47 +304,17 @@ footer {
 
     border-radius: 20px;
 
-    padding: 15px 10px;
+    padding: 14px 10px;
 
     margin: 8px 0 10px 0;
 
     text-align: center;
 
     box-shadow:
-    0 8px 28px rgba(245,158,11,.22);
+    0 8px 28px rgba(245,158,11,.20);
 
     animation:
     giftPop .35s ease-out;
-}
-
-.gift-card:before {
-
-    content: "🎁";
-
-    position: absolute;
-
-    right: 3px;
-
-    top: -14px;
-
-    font-size: 70px;
-
-    opacity: .08;
-}
-
-.gift-card:after {
-
-    content: "✨";
-
-    position: absolute;
-
-    left: 5px;
-
-    bottom: -10px;
-
-    font-size: 50px;
-
-    opacity: .08;
 }
 
 .gift-title {
@@ -379,7 +348,7 @@ footer {
 .gift-item {
 
     background:
-    rgba(255,255,255,.80);
+    rgba(255,255,255,.85);
 
     border-radius: 9px;
 
@@ -409,24 +378,20 @@ footer {
 @keyframes giftPop {
 
     0% {
-
         transform: scale(.88);
-
         opacity: 0;
     }
 
     100% {
-
         transform: scale(1);
-
         opacity: 1;
     }
 }
 
 
-/* ============================================================
-   SCORE
-   ============================================================ */
+/* =========================================================
+   SCORE CARDS
+   ========================================================= */
 
 .score-card {
 
@@ -439,6 +404,14 @@ footer {
     padding: 7px 3px;
 
     text-align: center;
+
+    min-height: 66px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
 
     box-shadow:
     0 2px 8px rgba(0,0,0,.05);
@@ -460,39 +433,62 @@ footer {
     color: #64748b;
 
     font-weight: 950;
+
+    line-height: 1.2;
 }
 
 
-/* ============================================================
+/* =========================================================
    BUTTON
-   ============================================================ */
+   ========================================================= */
 
 .stButton > button {
 
-    min-height: 43px;
+    min-height: 44px !important;
 
-    border-radius: 11px;
+    border-radius: 11px !important;
 
-    font-size: 11px;
+    font-size: 11px !important;
 
-    font-weight: 950;
+    font-weight: 950 !important;
 
-    white-space: nowrap;
+    white-space: nowrap !important;
+
+    visibility: visible !important;
+
+    opacity: 1 !important;
+
+    display: block !important;
 
     touch-action: manipulation;
 }
 
-button[kind="primary"] {
 
-    min-height: 44px;
+/* =========================================================
+   DOWNLOAD BUTTON
+   ========================================================= */
 
-    font-weight: 950;
+.stDownloadButton > button {
+
+    min-height: 46px !important;
+
+    border-radius: 12px !important;
+
+    font-size: 12px !important;
+
+    font-weight: 950 !important;
+
+    visibility: visible !important;
+
+    opacity: 1 !important;
+
+    display: block !important;
 }
 
 
-/* ============================================================
+/* =========================================================
    MOBILE
-   ============================================================ */
+   ========================================================= */
 
 @media(max-width:768px) {
 
@@ -552,6 +548,11 @@ button[kind="primary"] {
         font-size: 9px;
     }
 
+    .score-card {
+
+        min-height: 60px;
+    }
+
     .score-number {
 
         font-size: 16px;
@@ -564,9 +565,18 @@ button[kind="primary"] {
 
     .stButton > button {
 
-        min-height: 43px;
+        min-height: 44px !important;
 
-        font-size: 10px;
+        font-size: 10px !important;
+
+    }
+
+    .stDownloadButton > button {
+
+        min-height: 46px !important;
+
+        font-size: 10px !important;
+
     }
 
 }
@@ -626,15 +636,13 @@ def load_google_sheet():
             "Google Sheet data could not be loaded."
         )
 
-        st.code(
-            str(e)
-        )
+        st.code(str(e))
 
         return pd.DataFrame()
 
 
 # ============================================================
-# FRESH DATA
+# FRESH LOAD
 # ============================================================
 
 def fresh_load():
@@ -710,9 +718,7 @@ def send_update(
 
     data = json.dumps(
         payload
-    ).encode(
-        "utf-8"
-    )
+    ).encode("utf-8")
 
     request = urllib.request.Request(
 
@@ -733,25 +739,23 @@ def send_update(
         timeout=30
     ) as response:
 
-        text = (
+        response_text = (
             response
             .read()
-            .decode(
-                "utf-8"
-            )
+            .decode("utf-8")
         )
 
     try:
 
         return json.loads(
-            text
+            response_text
         )
 
     except:
 
         return {
             "success": False,
-            "message": text
+            "message": response_text
         }
 
 
@@ -759,9 +763,7 @@ def send_update(
 # SUMMARY
 # ============================================================
 
-def get_summary(
-    df
-):
+def get_summary(df):
 
     total = len(df)
 
@@ -813,48 +815,66 @@ def get_summary(
         if total > 0
 
         else 0
+
     )
 
     return (
-
         total,
-
         completed,
-
         in_progress,
-
         not_started,
-
         total_pending,
-
         percentage
-
     )
 
 
 # ============================================================
-# PDF GENERATION
+# PDF ESCAPE
 # ============================================================
 
-def create_full_report_pdf(
-    df
-):
+def pdf_text(value):
+
+    if pd.isna(value):
+
+        return ""
+
+    value = str(
+        value
+    ).strip()
+
+    return (
+        value
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+    )
+
+
+# ============================================================
+# CREATE FULL PDF
+# ============================================================
+
+def create_full_report_pdf(df):
 
     buffer = BytesIO()
 
+    # A4 LANDSCAPE
     doc = SimpleDocTemplate(
 
         buffer,
 
         pagesize=landscape(A4),
 
-        rightMargin=8 * mm,
+        leftMargin=5 * mm,
 
-        leftMargin=8 * mm,
+        rightMargin=5 * mm,
 
-        topMargin=8 * mm,
+        topMargin=7 * mm,
 
-        bottomMargin=8 * mm
+        bottomMargin=7 * mm,
+
+        title=
+        "ANAIMALAI TALUK - CENSUS ENUMERATION REPORT"
 
     )
 
@@ -862,55 +882,129 @@ def create_full_report_pdf(
     styles = getSampleStyleSheet()
 
 
+    # ========================================================
+    # PDF STYLES
+    # ========================================================
+
     title_style = ParagraphStyle(
 
-        "TitleCustom",
+        "PDFTitle",
 
         parent=styles["Title"],
 
-        fontSize=17,
+        fontName="Helvetica-Bold",
 
-        leading=20,
+        fontSize=15,
+
+        leading=18,
 
         alignment=TA_CENTER,
+
+        textColor=colors.HexColor(
+            "#172033"
+        ),
+
+        spaceAfter=3
+
+    )
+
+
+    subtitle_style = ParagraphStyle(
+
+        "PDFSubtitle",
+
+        parent=styles["Normal"],
+
+        fontName="Helvetica",
+
+        fontSize=8.5,
+
+        leading=10,
+
+        alignment=TA_CENTER,
+
+        textColor=colors.HexColor(
+            "#475569"
+        ),
 
         spaceAfter=8
 
     )
 
 
-    small_style = ParagraphStyle(
+    heading_style = ParagraphStyle(
 
-        "Small",
+        "PDFHeading",
+
+        parent=styles["Heading2"],
+
+        fontName="Helvetica-Bold",
+
+        fontSize=10,
+
+        leading=12,
+
+        textColor=colors.HexColor(
+            "#334155"
+        ),
+
+        spaceBefore=5,
+
+        spaceAfter=5
+
+    )
+
+
+    cell_style = ParagraphStyle(
+
+        "PDFCell",
 
         parent=styles["Normal"],
 
-        fontSize=6.5,
+        fontName="Helvetica",
 
-        leading=8
+        fontSize=6.2,
+
+        leading=7.5,
+
+        textColor=colors.HexColor(
+            "#111827"
+        ),
+
+        wordWrap="CJK"
 
     )
 
 
-    normal_style = ParagraphStyle(
+    header_style = ParagraphStyle(
 
-        "NormalCustom",
+        "PDFHeader",
 
         parent=styles["Normal"],
 
-        fontSize=8,
+        fontName="Helvetica-Bold",
 
-        leading=10
+        fontSize=6.2,
+
+        leading=7.5,
+
+        textColor=colors.HexColor(
+            "#172033"
+        ),
+
+        alignment=TA_CENTER,
+
+        wordWrap="CJK"
 
     )
 
+
+    # ========================================================
+    # STORY
+    # ========================================================
 
     story = []
 
-
-    # ========================================================
-    # SUMMARY
-    # ========================================================
 
     (
         total,
@@ -919,32 +1013,39 @@ def create_full_report_pdf(
         not_started,
         total_pending,
         percentage
+
     ) = get_summary(df)
 
 
+    # ========================================================
+    # TITLE
+    # ========================================================
+
     story.append(
+
         Paragraph(
             "ANAIMALAI TALUK - CENSUS ENUMERATION",
             title_style
         )
+
     )
 
 
     story.append(
+
         Paragraph(
             "Full Enumeration Report",
-            ParagraphStyle(
-                "Sub",
-                parent=styles["Normal"],
-                fontSize=10,
-                alignment=TA_CENTER,
-                spaceAfter=12
-            )
+            subtitle_style
         )
+
     )
 
 
-    summary_table = [
+    # ========================================================
+    # SUMMARY TABLE
+    # ========================================================
+
+    summary_data = [
 
         [
             "TOTAL ENUMERATOR",
@@ -967,20 +1068,27 @@ def create_full_report_pdf(
     ]
 
 
-    summary = Table(
-        summary_table,
+    summary_table = Table(
+
+        summary_data,
+
         colWidths=[
-            42 * mm,
-            35 * mm,
+
+            43 * mm,
+            36 * mm,
+            40 * mm,
+            40 * mm,
             38 * mm,
-            38 * mm,
-            38 * mm,
-            32 * mm
+            35 * mm
+
         ]
+
     )
 
 
-    summary.setStyle(
+    # LIGHT HEADING + DARK TEXT
+
+    summary_table.setStyle(
 
         TableStyle([
 
@@ -988,14 +1096,18 @@ def create_full_report_pdf(
                 "BACKGROUND",
                 (0, 0),
                 (-1, 0),
-                colors.HexColor("#0f766e")
+                colors.HexColor(
+                    "#e2e8f0"
+                )
             ),
 
             (
                 "TEXTCOLOR",
                 (0, 0),
-                (-1, 0),
-                colors.white
+                (-1, -1),
+                colors.HexColor(
+                    "#111827"
+                )
             ),
 
             (
@@ -1006,10 +1118,17 @@ def create_full_report_pdf(
             ),
 
             (
+                "FONTNAME",
+                (0, 1),
+                (-1, 1),
+                "Helvetica-Bold"
+            ),
+
+            (
                 "FONTSIZE",
                 (0, 0),
                 (-1, -1),
-                8
+                7.5
             ),
 
             (
@@ -1030,29 +1149,33 @@ def create_full_report_pdf(
                 "BACKGROUND",
                 (0, 1),
                 (-1, 1),
-                colors.HexColor("#f0fdfa")
+                colors.HexColor(
+                    "#f8fafc"
+                )
             ),
 
             (
                 "GRID",
                 (0, 0),
                 (-1, -1),
-                .5,
-                colors.HexColor("#94a3b8")
+                .4,
+                colors.HexColor(
+                    "#94a3b8"
+                )
             ),
 
             (
                 "TOPPADDING",
                 (0, 0),
                 (-1, -1),
-                6
+                5
             ),
 
             (
                 "BOTTOMPADDING",
                 (0, 0),
                 (-1, -1),
-                6
+                5
             )
 
         ])
@@ -1060,10 +1183,13 @@ def create_full_report_pdf(
     )
 
 
-    story.append(summary)
+    story.append(
+        summary_table
+    )
+
 
     story.append(
-        Spacer(1, 10)
+        Spacer(1, 7)
     )
 
 
@@ -1072,44 +1198,53 @@ def create_full_report_pdf(
     # ========================================================
 
     story.append(
+
         Paragraph(
             "Enumerator Status Summary",
-            ParagraphStyle(
-                "Heading",
-                parent=styles["Heading2"],
-                fontSize=11,
-                spaceAfter=6
-            )
+            heading_style
         )
+
     )
 
 
-    status_table = [
+    status_data = [
 
-        ["STATUS", "COUNT"],
+        [
+            "STATUS",
+            "COUNT"
+        ],
 
-        ["COMPLETED", str(completed)],
+        [
+            "COMPLETED",
+            str(completed)
+        ],
 
-        ["IN PROGRESS", str(in_progress)],
+        [
+            "IN PROGRESS",
+            str(in_progress)
+        ],
 
-        ["NOT STARTED", str(not_started)]
+        [
+            "NOT STARTED",
+            str(not_started)
+        ]
 
     ]
 
 
-    status_tbl = Table(
+    status_table = Table(
 
-        status_table,
+        status_data,
 
         colWidths=[
-            70 * mm,
-            40 * mm
+            65 * mm,
+            35 * mm
         ]
 
     )
 
 
-    status_tbl.setStyle(
+    status_table.setStyle(
 
         TableStyle([
 
@@ -1117,14 +1252,18 @@ def create_full_report_pdf(
                 "BACKGROUND",
                 (0, 0),
                 (-1, 0),
-                colors.HexColor("#0f766e")
+                colors.HexColor(
+                    "#e2e8f0"
+                )
             ),
 
             (
                 "TEXTCOLOR",
                 (0, 0),
-                (-1, 0),
-                colors.white
+                (-1, -1),
+                colors.HexColor(
+                    "#111827"
+                )
             ),
 
             (
@@ -1135,6 +1274,13 @@ def create_full_report_pdf(
             ),
 
             (
+                "FONTNAME",
+                (0, 1),
+                (-1, -1),
+                "Helvetica"
+            ),
+
+            (
                 "ALIGN",
                 (0, 0),
                 (-1, -1),
@@ -1142,25 +1288,50 @@ def create_full_report_pdf(
             ),
 
             (
-                "GRID",
+                "VALIGN",
                 (0, 0),
                 (-1, -1),
-                .5,
-                colors.grey
+                "MIDDLE"
             ),
 
             (
-                "FONTSIZE",
+                "GRID",
                 (0, 0),
                 (-1, -1),
-                8
+                .4,
+                colors.HexColor(
+                    "#94a3b8"
+                )
             ),
 
             (
                 "BACKGROUND",
                 (0, 1),
                 (-1, -1),
-                colors.HexColor("#f8fafc")
+                colors.HexColor(
+                    "#ffffff"
+                )
+            ),
+
+            (
+                "FONTSIZE",
+                (0, 0),
+                (-1, -1),
+                7.5
+            ),
+
+            (
+                "TOPPADDING",
+                (0, 0),
+                (-1, -1),
+                4
+            ),
+
+            (
+                "BOTTOMPADDING",
+                (0, 0),
+                (-1, -1),
+                4
             )
 
         ])
@@ -1169,29 +1340,26 @@ def create_full_report_pdf(
 
 
     story.append(
-        status_tbl
+        status_table
     )
 
 
     story.append(
-        Spacer(1, 15)
+        Spacer(1, 9)
     )
 
 
     # ========================================================
-    # FULL REPORT
+    # FULL ENUMERATION REPORT
     # ========================================================
 
     story.append(
+
         Paragraph(
             "Full Enumeration Report",
-            ParagraphStyle(
-                "Heading2Custom",
-                parent=styles["Heading2"],
-                fontSize=11,
-                spaceAfter=7
-            )
+            heading_style
         )
+
     )
 
 
@@ -1226,73 +1394,135 @@ def create_full_report_pdf(
 
     report_columns = [
 
-        c for c in report_columns
+        c
+
+        for c in report_columns
 
         if c in df.columns
 
     ]
 
 
+    # ========================================================
+    # IMPORTANT:
+    # TOTAL WIDTH KEPT INSIDE A4 LANDSCAPE
+    #
+    # A4 landscape width = 297mm
+    # Margins = 10mm total
+    # Available = 287mm
+    #
+    # Total below = 284mm
+    # ========================================================
+
+    width_map = {
+
+        HLB_COLUMN: 31,
+
+        "CIRCLE NUMBER": 17,
+
+        "SUPERVISOR NAME & MOBILE NUMBER": 27,
+
+        "VILLAGE NAME": 23,
+
+        "ENUMERATOR MOBILE NUMBER": 25,
+
+        "HLB DESCRIPTION": 32,
+
+        "STATUS": 20,
+
+        "PENDING": 13,
+
+        "REMARKS": 31,
+
+        "EXPECTED DATE": 19,
+
+        "LAST UPDATED": 21,
+
+        "COMPLETED DATE": 25
+
+    }
+
+
+    col_widths = [
+
+        width_map.get(
+            col,
+            20
+        ) * mm
+
+        for col in report_columns
+
+    ]
+
+
+    # ========================================================
+    # HEADER
+    # ========================================================
+
     pdf_data = []
 
 
-    header = [
+    pdf_header = [
 
         Paragraph(
-            str(c),
-            small_style
+            pdf_text(col),
+            header_style
         )
 
-        for c in report_columns
+        for col in report_columns
 
     ]
 
 
     pdf_data.append(
-        header
+        pdf_header
     )
 
+
+    # ========================================================
+    # ROWS
+    # ========================================================
 
     for _, row in df.iterrows():
 
         row_data = []
 
+
         for col in report_columns:
 
             value = row[col]
 
+
             if pd.isna(value):
 
                 value = ""
+
 
             value = str(
                 value
             ).strip()
 
 
-            # Prevent huge text
-            if len(value) > 180:
+            # Allow more characters.
+            # Paragraph will WRAP instead of cutting.
 
-                value = value[:180] + "..."
+            if len(value) > 500:
+
+                value = (
+                    value[:500]
+                    + "..."
+                )
 
 
             row_data.append(
 
                 Paragraph(
-                    value.replace(
-                        "&",
-                        "&amp;"
-                    ).replace(
-                        "<",
-                        "&lt;"
-                    ).replace(
-                        ">",
-                        "&gt;"
-                    ),
-                    small_style
+                    pdf_text(value),
+                    cell_style
                 )
 
             )
+
 
         pdf_data.append(
             row_data
@@ -1300,79 +1530,50 @@ def create_full_report_pdf(
 
 
     # ========================================================
-    # COLUMN WIDTH
+    # TABLE
     # ========================================================
-
-    width_map = {
-
-        HLB_COLUMN: 40,
-
-        "CIRCLE NUMBER": 20,
-
-        "SUPERVISOR NAME & MOBILE NUMBER": 38,
-
-        "VILLAGE NAME": 32,
-
-        "ENUMERATOR MOBILE NUMBER": 30,
-
-        "HLB DESCRIPTION": 48,
-
-        "STATUS": 25,
-
-        "PENDING": 18,
-
-        "REMARKS": 45,
-
-        "EXPECTED DATE": 27,
-
-        "LAST UPDATED": 28,
-
-        "COMPLETED DATE": 28
-
-    }
-
-
-    widths = [
-
-        width_map.get(
-            c,
-            30
-        ) * mm
-
-        for c in report_columns
-
-    ]
-
 
     report_table = Table(
 
         pdf_data,
 
-        colWidths=widths,
+        colWidths=col_widths,
 
         repeatRows=1,
 
-        splitByRow=1
+        splitByRow=1,
+
+        hAlign="LEFT"
 
     )
 
+
+    # ========================================================
+    # PRINT-FRIENDLY STYLE
+    # ========================================================
 
     report_table.setStyle(
 
         TableStyle([
 
+            # LIGHT HEADER
             (
                 "BACKGROUND",
                 (0, 0),
                 (-1, 0),
-                colors.HexColor("#064e3b")
+                colors.HexColor(
+                    "#e2e8f0"
+                )
             ),
 
+            # DARK TEXT
             (
                 "TEXTCOLOR",
                 (0, 0),
-                (-1, 0),
-                colors.white
+                (-1, -1),
+                colors.HexColor(
+                    "#111827"
+                )
             ),
 
             (
@@ -1383,6 +1584,20 @@ def create_full_report_pdf(
             ),
 
             (
+                "FONTNAME",
+                (0, 1),
+                (-1, -1),
+                "Helvetica"
+            ),
+
+            (
+                "VALIGN",
+                (0, 0),
+                (-1, -1),
+                "TOP"
+            ),
+
+            (
                 "ALIGN",
                 (0, 0),
                 (-1, 0),
@@ -1390,42 +1605,35 @@ def create_full_report_pdf(
             ),
 
             (
-                "VALIGN",
-                (0, 0),
-                (-1, -1),
-                "MIDDLE"
-            ),
-
-            (
                 "GRID",
                 (0, 0),
                 (-1, -1),
-                .3,
-                colors.HexColor("#94a3b8")
+                .35,
+                colors.HexColor(
+                    "#94a3b8"
+                )
             ),
 
+            # WHITE BODY
             (
-                "ROWBACKGROUNDS",
+                "BACKGROUND",
                 (0, 1),
                 (-1, -1),
-                [
-                    colors.white,
-                    colors.HexColor("#f8fafc")
-                ]
+                colors.white
             ),
 
             (
                 "LEFTPADDING",
                 (0, 0),
                 (-1, -1),
-                3
+                2.5
             ),
 
             (
                 "RIGHTPADDING",
                 (0, 0),
                 (-1, -1),
-                3
+                2.5
             ),
 
             (
@@ -1467,6 +1675,25 @@ def create_full_report_pdf(
 
 
 # ============================================================
+# SESSION STATE
+# ============================================================
+
+if "selected_enum" not in st.session_state:
+
+    st.session_state.selected_enum = None
+
+
+if "record" not in st.session_state:
+
+    st.session_state.record = None
+
+
+if "gift" not in st.session_state:
+
+    st.session_state.gift = None
+
+
+# ============================================================
 # HEADER
 # ============================================================
 
@@ -1493,25 +1720,6 @@ Enumeration Monitoring & Progress System
 
 
 # ============================================================
-# SESSION STATE
-# ============================================================
-
-if "selected_enum" not in st.session_state:
-
-    st.session_state.selected_enum = None
-
-
-if "record" not in st.session_state:
-
-    st.session_state.record = None
-
-
-if "gift" not in st.session_state:
-
-    st.session_state.gift = None
-
-
-# ============================================================
 # LOAD DATA
 # ============================================================
 
@@ -1519,6 +1727,10 @@ df = load_google_sheet()
 
 
 if df.empty:
+
+    st.error(
+        "No data found in Google Sheet."
+    )
 
     st.stop()
 
@@ -1533,7 +1745,7 @@ if HLB_COLUMN not in df.columns:
 
 
 # ============================================================
-# GIFT SUCCESS CARD
+# SUCCESS GIFT CARD
 # ============================================================
 
 if st.session_state.gift:
@@ -1541,6 +1753,7 @@ if st.session_state.gift:
     g = st.session_state.gift
 
     st.markdown(
+
         f"""
 <div class="gift-card">
 
@@ -1549,7 +1762,7 @@ if st.session_state.gift:
 </div>
 
 <div class="gift-sub">
-Google Sheet updated
+Google Sheet updated successfully
 </div>
 
 <div class="gift-grid">
@@ -1594,13 +1807,10 @@ PENDING
 
 </div>
 """,
+
         unsafe_allow_html=True
+
     )
-
-
-    # IMPORTANT:
-    # Do NOT auto-hide the card.
-    # It remains visible until next search/update.
 
 
 # ============================================================
@@ -1660,6 +1870,9 @@ selected = st.selectbox(
 )
 
 
+# IMPORTANT:
+# Separate row so button stays visible
+
 search_clicked = st.button(
 
     "🔍 SEARCH",
@@ -1680,7 +1893,7 @@ st.markdown(
 
 
 # ============================================================
-# SEARCH ACTION
+# SEARCH
 # ============================================================
 
 if search_clicked:
@@ -1693,13 +1906,14 @@ if search_clicked:
 
     else:
 
-        with st.spinner(
-            "Loading..."
-        ):
+        try:
 
-            try:
+            with st.spinner(
+                "Loading..."
+            ):
 
                 latest = fresh_load()
+
 
                 found = latest[
 
@@ -1714,43 +1928,45 @@ if search_clicked:
                 ]
 
 
-                if found.empty:
-
-                    st.error(
-                        "Enumerator not found"
-                    )
-
-                else:
-
-                    st.session_state.selected_enum = selected
-
-                    st.session_state.record = (
-
-                        found
-                        .iloc[0]
-                        .to_dict()
-
-                    )
-
-                    # New search hides old success card
-                    st.session_state.gift = None
-
-                    st.rerun()
-
-
-            except Exception as e:
+            if found.empty:
 
                 st.error(
-                    "Loading error"
+                    "Enumerator not found."
                 )
 
-                st.code(
-                    str(e)
+            else:
+
+                st.session_state.selected_enum = (
+                    selected
                 )
+
+                st.session_state.record = (
+
+                    found
+                    .iloc[0]
+                    .to_dict()
+
+                )
+
+                # Remove previous update card
+                st.session_state.gift = None
+
+                st.rerun()
+
+
+        except Exception as e:
+
+            st.error(
+                "Google Sheet loading error."
+            )
+
+            st.code(
+                str(e)
+            )
 
 
 # ============================================================
-# ENUMERATOR RECORD
+# ENUMERATOR DETAILS
 # ============================================================
 
 if st.session_state.record is not None:
@@ -1764,19 +1980,20 @@ if st.session_state.record is not None:
     )
 
 
-    # ========================================================
-    # DETAILS
-    # ========================================================
-
     st.markdown(
-        '<div class="section-title">Enumerator Details</div>',
+        '<div class="section-title">'
+        'Enumerator Details'
+        '</div>',
         unsafe_allow_html=True
     )
 
 
-    # HLB NUMBER
+    # --------------------------------------------------------
+    # HLB
+    # --------------------------------------------------------
 
     st.markdown(
+
         f"""
 <div class="info-card">
 
@@ -1793,13 +2010,18 @@ HLB NUMBER - ENUMERATOR
 
 </div>
 """,
+
         unsafe_allow_html=True
+
     )
 
 
+    # --------------------------------------------------------
     # MOBILE
+    # --------------------------------------------------------
 
     st.markdown(
+
         f"""
 <div class="info-card">
 
@@ -1816,13 +2038,18 @@ ENUMERATOR MOBILE NUMBER
 
 </div>
 """,
+
         unsafe_allow_html=True
+
     )
 
 
+    # --------------------------------------------------------
     # DESCRIPTION
+    # --------------------------------------------------------
 
     st.markdown(
+
         f"""
 <div class="info-card">
 
@@ -1839,12 +2066,14 @@ HLB DESCRIPTION
 
 </div>
 """,
+
         unsafe_allow_html=True
+
     )
 
 
     # ========================================================
-    # CURRENT STATUS
+    # STATUS
     # ========================================================
 
     current_status = get_value(
@@ -1861,41 +2090,50 @@ HLB DESCRIPTION
     if current_status == "COMPLETED":
 
         st.markdown(
+
             """
 <div class="status-card status-completed">
 🟢 COMPLETED
 </div>
 """,
+
             unsafe_allow_html=True
+
         )
 
 
     elif current_status == "IN PROGRESS":
 
         st.markdown(
+
             """
 <div class="status-card status-progress">
 🟡 IN PROGRESS
 </div>
 """,
+
             unsafe_allow_html=True
+
         )
 
 
     else:
 
         st.markdown(
+
             """
 <div class="status-card status-notstarted">
 🔴 NOT STARTED
 </div>
 """,
+
             unsafe_allow_html=True
+
         )
 
 
     # ========================================================
-    # COMPLETED LOCK
+    # COMPLETED
     # ========================================================
 
     if current_status == "COMPLETED":
@@ -1904,10 +2142,12 @@ HLB DESCRIPTION
             "🔒 Completed"
         )
 
+
         completed_date = get_value(
             record,
             "COMPLETED DATE"
         )
+
 
         if completed_date:
 
@@ -1915,10 +2155,12 @@ HLB DESCRIPTION
                 f"Completed Date: {completed_date}"
             )
 
+
         remarks = get_value(
             record,
             "REMARKS"
         )
+
 
         if remarks:
 
@@ -1928,14 +2170,19 @@ HLB DESCRIPTION
 
 
     # ========================================================
-    # UPDATE FORM
+    # UPDATE
     # ========================================================
 
     else:
 
         st.markdown(
-            '<div class="section-title">Update Enumeration</div>',
+
+            '<div class="section-title">'
+            'Update Enumeration'
+            '</div>',
+
             unsafe_allow_html=True
+
         )
 
 
@@ -1952,16 +2199,18 @@ HLB DESCRIPTION
 
         try:
 
-            status_index = (
+            default_index = (
+
                 status_options
                 .index(
                     current_status
                 )
+
             )
 
         except:
 
-            status_index = 0
+            default_index = 0
 
 
         status = st.selectbox(
@@ -1970,20 +2219,20 @@ HLB DESCRIPTION
 
             status_options,
 
-            index=status_index,
+            index=default_index,
 
             key="update_status"
 
         )
 
 
-        # ====================================================
+        # ----------------------------------------------------
         # PENDING
-        # ====================================================
+        # ----------------------------------------------------
 
         try:
 
-            old_pending = int(
+            current_pending = int(
 
                 float(
 
@@ -1999,7 +2248,7 @@ HLB DESCRIPTION
 
         except:
 
-            old_pending = 0
+            current_pending = 0
 
 
         pending = st.number_input(
@@ -2008,7 +2257,7 @@ HLB DESCRIPTION
 
             min_value=0,
 
-            value=old_pending,
+            value=current_pending,
 
             step=1,
 
@@ -2017,9 +2266,9 @@ HLB DESCRIPTION
         )
 
 
-        # ====================================================
+        # ----------------------------------------------------
         # EXPECTED DATE
-        # ====================================================
+        # ----------------------------------------------------
 
         expected_date = st.date_input(
 
@@ -2027,14 +2276,14 @@ HLB DESCRIPTION
 
             value=date.today(),
 
-            key="update_date"
+            key="expected_date"
 
         )
 
 
-        # ====================================================
+        # ----------------------------------------------------
         # REMARKS
-        # ====================================================
+        # ----------------------------------------------------
 
         remarks = st.text_area(
 
@@ -2047,14 +2296,14 @@ HLB DESCRIPTION
 
             height=75,
 
-            key="update_remarks"
+            key="remarks"
 
         )
 
 
-        # ====================================================
-        # SAVE
-        # ====================================================
+        # ----------------------------------------------------
+        # SAVE BUTTON
+        # ----------------------------------------------------
 
         if st.button(
 
@@ -2064,21 +2313,21 @@ HLB DESCRIPTION
 
             width="stretch",
 
-            key="save_update"
+            key="save_update_button"
 
         ):
 
 
-            # ------------------------------------------------
-            # IN PROGRESS
-            # ------------------------------------------------
+            # =================================================
+            # IN PROGRESS VALIDATION
+            # =================================================
 
             if status == "IN PROGRESS":
 
                 if pending <= 0:
 
                     st.error(
-                        "Pending Count required"
+                        "⚠️ Pending Count is required."
                     )
 
                     st.stop()
@@ -2087,24 +2336,24 @@ HLB DESCRIPTION
                 if not remarks.strip():
 
                     st.error(
-                        "Reason required"
+                        "⚠️ Reason / Remarks is required."
                     )
 
                     st.stop()
 
 
-            # ------------------------------------------------
+            # =================================================
             # COMPLETED
-            # ------------------------------------------------
+            # =================================================
 
             if status == "COMPLETED":
 
                 pending = 0
 
 
-            # ------------------------------------------------
+            # =================================================
             # PAYLOAD
-            # ------------------------------------------------
+            # =================================================
 
             payload = {
 
@@ -2137,9 +2386,9 @@ HLB DESCRIPTION
             }
 
 
-            # ------------------------------------------------
+            # =================================================
             # SAVE
-            # ------------------------------------------------
+            # =================================================
 
             with st.spinner(
                 "Saving..."
@@ -2156,9 +2405,9 @@ HLB DESCRIPTION
                         "success"
                     ):
 
-                        # ====================================
-                        # GIFT CARD
-                        # ====================================
+                        # -------------------------------------
+                        # SAVE SUCCESS CARD
+                        # -------------------------------------
 
                         st.session_state.gift = {
 
@@ -2174,11 +2423,16 @@ HLB DESCRIPTION
                         }
 
 
-                        # ====================================
-                        # LOAD NEW GOOGLE DATA
-                        # ====================================
+                        # -------------------------------------
+                        # CLEAR CACHE
+                        # -------------------------------------
 
                         st.cache_data.clear()
+
+
+                        # -------------------------------------
+                        # LOAD UPDATED RECORD
+                        # -------------------------------------
 
                         latest = fresh_load()
 
@@ -2207,31 +2461,31 @@ HLB DESCRIPTION
                             )
 
 
-                        # IMPORTANT:
-                        # No rerun here.
-                        # Gift card remains visible.
-
+                        # RERUN TO REFRESH
+                        # GIFT CARD REMAINS
                         st.rerun()
 
 
                     else:
 
                         st.error(
-                            "SAVE FAILED"
+                            "❌ SAVE FAILED"
                         )
 
                         st.code(
+
                             result.get(
                                 "message",
                                 "Unknown error"
                             )
+
                         )
 
 
                 except Exception as e:
 
                     st.error(
-                        "Connection error"
+                        "❌ Connection error"
                     )
 
                     st.code(
@@ -2253,27 +2507,35 @@ st.divider()
     not_started,
     total_pending,
     percentage
+
 ) = get_summary(df)
 
 
 st.markdown(
+
     '<div class="section-title">'
-    'Taluk Overall Progress'
+    '📊 Taluk Overall Progress'
     '</div>',
+
     unsafe_allow_html=True
+
 )
 
 
 # ============================================================
-# SCORE CARDS
+# FIVE CARDS - ONE ROW
 # ============================================================
 
-a, b, c = st.columns(3)
+c1, c2, c3, c4, c5 = st.columns(
+    5,
+    gap="small"
+)
 
 
-with a:
+with c1:
 
     st.markdown(
+
         f"""
 <div class="score-card">
 
@@ -2287,13 +2549,16 @@ TOTAL ENUMERATOR
 
 </div>
 """,
+
         unsafe_allow_html=True
+
     )
 
 
-with b:
+with c2:
 
     st.markdown(
+
         f"""
 <div class="score-card">
 
@@ -2307,36 +2572,16 @@ with b:
 
 </div>
 """,
+
         unsafe_allow_html=True
+
     )
 
 
-with c:
+with c3:
 
     st.markdown(
-        f"""
-<div class="score-card">
 
-<div class="score-number">
-{total_pending}
-</div>
-
-<div class="score-label">
-TOTAL PENDING
-</div>
-
-</div>
-""",
-        unsafe_allow_html=True
-    )
-
-
-a, b = st.columns(2)
-
-
-with a:
-
-    st.markdown(
         f"""
 <div class="score-card">
 
@@ -2350,13 +2595,16 @@ with a:
 
 </div>
 """,
+
         unsafe_allow_html=True
+
     )
 
 
-with b:
+with c4:
 
     st.markdown(
+
         f"""
 <div class="score-card">
 
@@ -2370,12 +2618,37 @@ with b:
 
 </div>
 """,
+
         unsafe_allow_html=True
+
+    )
+
+
+with c5:
+
+    st.markdown(
+
+        f"""
+<div class="score-card">
+
+<div class="score-number">
+{total_pending}
+</div>
+
+<div class="score-label">
+📌 TOTAL PENDING
+</div>
+
+</div>
+""",
+
+        unsafe_allow_html=True
+
     )
 
 
 # ============================================================
-# PROGRESS BAR
+# PROGRESS
 # ============================================================
 
 st.progress(
@@ -2384,19 +2657,23 @@ st.progress(
 
 
 st.markdown(
+
     f"""
 <div style="
 text-align:center;
 font-weight:950;
 font-size:12px;
 margin-top:-3px;
+margin-bottom:5px;
 ">
 
-{percentage:.1f}% Completed
+Overall Completion: {percentage:.1f}%
 
 </div>
 """,
+
     unsafe_allow_html=True
+
 )
 
 
@@ -2443,7 +2720,11 @@ fig = px.pie(
 
 
 fig.update_traces(
-    textinfo="label+percent"
+
+    textinfo="label+percent",
+
+    textposition="inside"
+
 )
 
 
@@ -2465,10 +2746,15 @@ fig.update_layout(
     ),
 
     legend=dict(
+
         orientation="h",
+
         y=-.08,
+
         x=.5,
+
         xanchor="center"
+
     )
 
 )
@@ -2488,20 +2774,23 @@ st.plotly_chart(
 
 
 # ============================================================
-# ENUMERATOR STATUS
+# ENUMERATOR STATUS TABLE
 # ============================================================
 
 st.markdown(
+
     '<div class="section-title">'
-    'Enumerator Status'
+    '📋 Enumerator Status'
     '</div>',
+
     unsafe_allow_html=True
+
 )
 
 
 status_filter = st.selectbox(
 
-    "Status",
+    "Status Filter",
 
     [
 
@@ -2515,19 +2804,19 @@ status_filter = st.selectbox(
 
     ],
 
-    key="table_status"
+    key="status_filter"
 
 )
 
 
-table_df = df.copy()
+display_df = df.copy()
 
 
 if status_filter != "ALL":
 
-    table_df = table_df[
+    display_df = display_df[
 
-        table_df["STATUS"]
+        display_df["STATUS"]
         == status_filter
 
     ]
@@ -2554,16 +2843,18 @@ table_columns = [
 
 table_columns = [
 
-    c for c in table_columns
+    c
 
-    if c in table_df.columns
+    for c in table_columns
+
+    if c in display_df.columns
 
 ]
 
 
 st.dataframe(
 
-    table_df[
+    display_df[
         table_columns
     ],
 
@@ -2577,23 +2868,22 @@ st.dataframe(
 
 
 # ============================================================
-# FULL PDF REPORT
+# FULL PDF
 # ============================================================
 
 st.divider()
 
 
 st.markdown(
+
     '<div class="section-title">'
     '📄 Full Enumeration Report'
     '</div>',
+
     unsafe_allow_html=True
+
 )
 
-
-# ============================================================
-# CREATE PDF
-# ============================================================
 
 try:
 
@@ -2616,14 +2906,17 @@ try:
 
         width="stretch",
 
-        type="primary"
+        type="primary",
+
+        key="download_pdf"
 
     )
+
 
 except Exception as e:
 
     st.error(
-        "PDF உருவாக்க முடியவில்லை."
+        "PDF உருவாக்குவதில் பிழை."
     )
 
     st.code(
