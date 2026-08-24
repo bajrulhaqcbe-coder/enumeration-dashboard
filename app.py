@@ -8,11 +8,11 @@ import plotly.express as px
 
 
 # ============================================================
-# PAGE CONFIG
+# PAGE
 # ============================================================
 
 st.set_page_config(
-    page_title="ANAIMALAI TALUK - CENSUS ENUMERATION",
+    page_title="ANAIMALAI TALUK - CENSUS",
     page_icon="📋",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -20,11 +20,10 @@ st.set_page_config(
 
 
 # ============================================================
-# GOOGLE SHEET CONFIG
+# GOOGLE SHEET
 # ============================================================
 
 SHEET_ID = "1vmxjbYABVPbu5PUVSLQO0H8J3TTflyTgGKOj5nH9Q14"
-
 SHEET_GID = "1357887790"
 
 CSV_URL = (
@@ -34,7 +33,7 @@ CSV_URL = (
 
 
 # ============================================================
-# GOOGLE APPS SCRIPT
+# APPS SCRIPT
 # ============================================================
 
 APPS_SCRIPT_URL = (
@@ -44,31 +43,27 @@ APPS_SCRIPT_URL = (
 
 
 # ============================================================
-# ADMIN LOGIN
+# ADMIN
 # ============================================================
 
 ADMIN_USERNAME = "admin"
 ADMIN_PASSWORD = "admin123"
 
 
-# ============================================================
-# MAIN COLUMN
-# ============================================================
-
 HLB_COLUMN = "HLB NUMBER-ENUMERATOR NAME"
 
 
 # ============================================================
-# CUSTOM CSS
+# CSS
 # ============================================================
 
 st.markdown(
     """
 <style>
 
-/* ============================================================
-   REMOVE DEFAULT STREAMLIT UI
-   ============================================================ */
+/* =========================
+   BASIC
+   ========================= */
 
 #MainMenu {
     visibility: hidden;
@@ -82,199 +77,175 @@ footer {
     visibility: hidden;
 }
 
-
-/* ============================================================
-   MAIN AREA
-   ============================================================ */
-
 .block-container {
 
-    max-width: 1050px;
+    max-width: 1000px;
 
     padding-top: 0.25rem;
     padding-bottom: 1rem;
-    padding-left: 0.45rem;
-    padding-right: 0.45rem;
+
+    padding-left: 0.35rem;
+    padding-right: 0.35rem;
 }
 
 
-/* ============================================================
-   MAIN HEADER
-   ============================================================ */
+/* =========================
+   HEADER
+   ========================= */
 
 .hero {
 
     background:
-        linear-gradient(
-            135deg,
-            #064e3b 0%,
-            #0f766e 45%,
-            #0891b2 100%
-        );
-
-    border-radius: 18px;
-
-    padding: 15px 10px;
-
-    text-align: center;
+    linear-gradient(
+        135deg,
+        #064e3b,
+        #0f766e,
+        #0891b2
+    );
 
     color: white;
 
-    margin-bottom: 9px;
+    border-radius: 18px;
+
+    padding: 14px 8px;
+
+    text-align: center;
+
+    margin-bottom: 8px;
 
     box-shadow:
-        0 7px 20px rgba(0,0,0,0.14);
-
-    border: 1px solid rgba(255,255,255,0.20);
+    0 6px 20px rgba(0,0,0,.14);
 }
 
 .hero-title {
 
     font-size: 21px;
 
-    font-weight: 950;
+    font-weight: 900;
 
     line-height: 1.25;
-
-    letter-spacing: 0.2px;
 }
 
 .hero-sub {
 
     font-size: 9px;
 
-    margin-top: 5px;
+    margin-top: 4px;
 
-    opacity: 0.92;
+    opacity: .9;
 }
 
 
-/* ============================================================
-   TOP MENU
-   ============================================================ */
+/* =========================
+   MENU
+   ========================= */
 
-.top-menu {
+.menu-box {
 
     background: white;
 
-    border-radius: 12px;
-
-    padding: 5px;
-
     border: 1px solid #dbeafe;
 
-    box-shadow:
-        0 3px 12px rgba(15,23,42,0.06);
+    border-radius: 12px;
 
-    margin-bottom: 8px;
+    padding: 4px;
+
+    margin-bottom: 7px;
+
+    box-shadow:
+    0 3px 10px rgba(0,0,0,.05);
 }
 
 
-/* ============================================================
-   SECTION TITLE
-   ============================================================ */
+/* =========================
+   SECTION
+   ========================= */
 
 .section-title {
 
-    font-size: 17px;
+    font-size: 16px;
 
-    font-weight: 950;
+    font-weight: 900;
 
     color: #0f172a;
 
-    margin-top: 8px;
+    margin-top: 7px;
 
-    margin-bottom: 6px;
+    margin-bottom: 5px;
 }
 
 
-/* ============================================================
-   SEARCH BOX
-   ============================================================ */
+/* =========================
+   SEARCH
+   ========================= */
 
 .search-box {
 
     background:
-        linear-gradient(
-            135deg,
-            #ffffff,
-            #f0fdfa
-        );
+    linear-gradient(
+        135deg,
+        #ffffff,
+        #f0fdfa
+    );
 
     border: 1px solid #99f6e4;
 
     border-radius: 14px;
 
-    padding: 8px;
+    padding: 7px;
 
-    margin-bottom: 8px;
-
-    box-shadow:
-        0 4px 14px rgba(15,118,110,0.08);
+    margin-bottom: 7px;
 }
 
 
-/* ============================================================
-   RESULT CARD
-   ============================================================ */
+/* =========================
+   INFO CARD
+   ========================= */
 
 .info-card {
 
     background: white;
 
-    border-radius: 12px;
-
-    padding: 8px;
-
-    margin-bottom: 6px;
-
     border: 1px solid #e2e8f0;
 
+    border-radius: 11px;
+
+    padding: 7px 9px;
+
+    margin-bottom: 5px;
+
     box-shadow:
-        0 3px 10px rgba(15,23,42,0.05);
+    0 2px 8px rgba(15,23,42,.05);
 }
 
 .info-label {
 
-    font-size: 8px;
-
-    font-weight: 950;
-
     color: #64748b;
 
-    letter-spacing: 0.3px;
+    font-size: 8px;
+
+    font-weight: 900;
 }
 
 .info-value {
 
-    font-size: 13px;
+    color: #0f172a;
+
+    font-size: 12px;
 
     font-weight: 850;
 
-    color: #0f172a;
-
-    margin-top: 3px;
+    margin-top: 2px;
 
     word-break: break-word;
 }
 
 
-/* ============================================================
-   STATUS CARDS
-   ============================================================ */
+/* =========================
+   STATUS
+   ========================= */
 
-.status-completed {
-
-    background:
-        linear-gradient(
-            135deg,
-            #dcfce7,
-            #bbf7d0
-        );
-
-    border: 1px solid #86efac;
-
-    color: #166534;
+.status-card {
 
     border-radius: 12px;
 
@@ -284,146 +255,188 @@ footer {
 
     font-size: 12px;
 
-    font-weight: 950;
+    font-weight: 900;
 
-    margin: 7px 0;
+    margin: 6px 0;
+}
+
+.status-completed {
+
+    background: #dcfce7;
+
+    color: #166534;
+
+    border: 1px solid #86efac;
 }
 
 .status-progress {
 
-    background:
-        linear-gradient(
-            135deg,
-            #fef3c7,
-            #fde68a
-        );
-
-    border: 1px solid #fcd34d;
+    background: #fef3c7;
 
     color: #92400e;
 
-    border-radius: 12px;
-
-    padding: 8px;
-
-    text-align: center;
-
-    font-size: 12px;
-
-    font-weight: 950;
-
-    margin: 7px 0;
+    border: 1px solid #fcd34d;
 }
 
 .status-notstarted {
 
-    background:
-        linear-gradient(
-            135deg,
-            #fee2e2,
-            #fecaca
-        );
-
-    border: 1px solid #fca5a5;
+    background: #fee2e2;
 
     color: #991b1b;
 
-    border-radius: 12px;
-
-    padding: 8px;
-
-    text-align: center;
-
-    font-size: 12px;
-
-    font-weight: 950;
-
-    margin: 7px 0;
+    border: 1px solid #fca5a5;
 }
 
 
-/* ============================================================
-   MINI SCORE CARD
-   ============================================================ */
+/* =========================
+   GIFT SUCCESS CARD
+   ========================= */
 
-.save-card {
+.gift-card {
+
+    position: relative;
+
+    overflow: hidden;
 
     background:
-        linear-gradient(
-            135deg,
-            #ecfdf5,
-            #d1fae5
-        );
+    linear-gradient(
+        135deg,
+        #fff7ed,
+        #fef3c7,
+        #ecfdf5
+    );
 
-    border: 1px solid #6ee7b7;
+    border: 2px solid #f59e0b;
 
-    color: #065f46;
+    border-radius: 20px;
 
-    border-radius: 14px;
+    padding: 15px 12px;
 
-    padding: 10px;
-
-    margin: 7px 0;
+    margin: 8px 0 10px 0;
 
     text-align: center;
 
     box-shadow:
-        0 5px 18px rgba(16,185,129,0.15);
+    0 8px 25px rgba(245,158,11,.20);
 
-    animation: popCard 0.35s ease-out;
+    animation:
+    giftPop .35s ease-out;
 }
 
-.save-card-title {
+.gift-card:before {
 
-    font-size: 15px;
+    content: "🎁";
+
+    position: absolute;
+
+    font-size: 65px;
+
+    opacity: .08;
+
+    right: -5px;
+
+    top: -13px;
+}
+
+.gift-title {
+
+    font-size: 18px;
 
     font-weight: 950;
+
+    color: #92400e;
 }
 
-.save-card-small {
+.gift-sub {
 
-    font-size: 9px;
+    font-size: 10px;
 
-    margin-top: 3px;
+    color: #475569;
+
+    margin: 4px 0 8px 0;
 }
 
-@keyframes popCard {
+.gift-grid {
 
-    0% {
-        transform: scale(0.90);
+    display: grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap: 5px;
+}
+
+.gift-item {
+
+    background:
+    rgba(255,255,255,.75);
+
+    border-radius: 9px;
+
+    padding: 6px 3px;
+}
+
+.gift-label {
+
+    font-size: 7px;
+
+    color: #64748b;
+
+    font-weight: 900;
+}
+
+.gift-value {
+
+    font-size: 10px;
+
+    color: #0f172a;
+
+    font-weight: 950;
+
+    margin-top: 2px;
+}
+
+@keyframes giftPop {
+
+    from {
+
+        transform: scale(.88);
+
         opacity: 0;
     }
 
-    100% {
+    to {
+
         transform: scale(1);
+
         opacity: 1;
     }
 }
 
 
-/* ============================================================
-   SUMMARY CARD
-   ============================================================ */
+/* =========================
+   SCORE
+   ========================= */
 
 .score-card {
 
     background: white;
 
-    border-radius: 13px;
-
     border: 1px solid #e2e8f0;
 
-    padding: 8px 3px;
+    border-radius: 12px;
+
+    padding: 7px 3px;
 
     text-align: center;
 
     box-shadow:
-        0 3px 10px rgba(15,23,42,0.05);
+    0 2px 8px rgba(0,0,0,.05);
 }
 
 .score-number {
 
-    font-size: 20px;
+    font-size: 19px;
 
     font-weight: 950;
 
@@ -434,104 +447,79 @@ footer {
 
     font-size: 7px;
 
-    font-weight: 950;
-
     color: #64748b;
 
-    margin-top: 2px;
+    font-weight: 900;
 }
 
 
-/* ============================================================
-   BUTTONS
-   ============================================================ */
+/* =========================
+   BUTTON
+   ========================= */
 
 .stButton > button {
 
-    min-height: 40px;
+    min-height: 42px;
 
-    border-radius: 10px;
+    border-radius: 11px;
 
-    font-size: 12px;
+    font-size: 11px;
 
     font-weight: 950;
 
-    border: 1px solid #cbd5e1;
+    white-space: nowrap;
 
-    transition: all 0.2s ease;
+    width: 100%;
+
+    touch-action: manipulation;
 }
-
-.stButton > button:hover {
-
-    transform: translateY(-1px);
-
-    box-shadow:
-        0 5px 12px rgba(15,23,42,0.10);
-}
-
-
-/* ============================================================
-   PRIMARY BUTTON
-   ============================================================ */
 
 button[kind="primary"] {
 
-    min-height: 42px;
+    min-height: 44px;
 
     font-weight: 950;
 }
 
 
-/* ============================================================
-   INPUTS
-   ============================================================ */
+/* =========================
+   INPUT
+   ========================= */
 
 div[data-baseweb="select"] {
 
     border-radius: 10px;
 }
 
-div[data-baseweb="input"] {
+textarea {
 
-    border-radius: 10px;
+    border-radius: 10px !important;
 }
 
 
-/* ============================================================
-   DATAFRAME
-   ============================================================ */
-
-[data-testid="stDataFrame"] {
-
-    border-radius: 10px;
-
-    overflow: hidden;
-}
-
-
-/* ============================================================
+/* =========================
    MOBILE
-   ============================================================ */
+   ========================= */
 
-@media only screen and (max-width: 768px) {
+@media(max-width:768px) {
 
     .block-container {
 
-        padding-left: 0.20rem;
-        padding-right: 0.20rem;
-        padding-top: 0.15rem;
+        padding-left: .18rem;
+        padding-right: .18rem;
+        padding-top: .15rem;
     }
 
     .hero {
 
-        padding: 10px 5px;
+        border-radius: 13px;
 
-        border-radius: 12px;
+        padding: 9px 5px;
     }
 
     .hero-title {
 
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .hero-sub {
@@ -541,30 +529,7 @@ div[data-baseweb="input"] {
 
     .section-title {
 
-        font-size: 14px;
-
-        margin-top: 5px;
-
-        margin-bottom: 4px;
-    }
-
-    .search-box {
-
-        padding: 5px;
-
-        border-radius: 10px;
-    }
-
-    .info-card {
-
-        padding: 7px;
-
-        border-radius: 9px;
-    }
-
-    .info-label {
-
-        font-size: 7px;
+        font-size: 13px;
     }
 
     .info-value {
@@ -572,16 +537,36 @@ div[data-baseweb="input"] {
         font-size: 11px;
     }
 
-    .score-card {
+    .gift-card {
 
-        padding: 6px 2px;
+        padding: 12px 7px;
 
-        border-radius: 9px;
+        border-radius: 15px;
+    }
+
+    .gift-title {
+
+        font-size: 15px;
+    }
+
+    .gift-grid {
+
+        gap: 3px;
+    }
+
+    .gift-label {
+
+        font-size: 6px;
+    }
+
+    .gift-value {
+
+        font-size: 9px;
     }
 
     .score-number {
 
-        font-size: 17px;
+        font-size: 16px;
     }
 
     .score-label {
@@ -589,26 +574,9 @@ div[data-baseweb="input"] {
         font-size: 6px;
     }
 
-    .save-card {
-
-        padding: 8px;
-
-        border-radius: 10px;
-    }
-
-    .save-card-title {
-
-        font-size: 13px;
-    }
-
-    .save-card-small {
-
-        font-size: 8px;
-    }
-
     .stButton > button {
 
-        min-height: 38px;
+        min-height: 42px;
 
         font-size: 10px;
     }
@@ -622,7 +590,7 @@ div[data-baseweb="input"] {
 
 
 # ============================================================
-# LOAD GOOGLE SHEET
+# LOAD SHEET
 # ============================================================
 
 @st.cache_data(ttl=20)
@@ -630,42 +598,40 @@ def load_google_sheet():
 
     try:
 
-        data = pd.read_csv(CSV_URL)
+        df = pd.read_csv(CSV_URL)
 
-        data = data.dropna(how="all")
+        df = df.dropna(how="all")
 
-        data.columns = (
-            data.columns
+        df.columns = (
+            df.columns
             .astype(str)
             .str.strip()
         )
 
-        data = data.fillna("")
+        df = df.fillna("")
 
-        if "STATUS" not in data.columns:
+        if "STATUS" not in df.columns:
 
-            data["STATUS"] = "NOT STARTED"
+            df["STATUS"] = "NOT STARTED"
 
-        data["STATUS"] = (
-            data["STATUS"]
+        df["STATUS"] = (
+            df["STATUS"]
             .astype(str)
             .str.strip()
             .str.upper()
         )
 
-        data.loc[
-            data["STATUS"].isin(
-                ["", "NAN"]
-            ),
+        df.loc[
+            df["STATUS"].isin(["", "NAN"]),
             "STATUS"
         ] = "NOT STARTED"
 
-        return data
+        return df
 
     except Exception as e:
 
         st.error(
-            "Google Sheet தரவை ஏற்ற முடியவில்லை."
+            "Google Sheet data could not be loaded."
         )
 
         st.code(str(e))
@@ -679,51 +645,42 @@ def load_google_sheet():
 
 def fresh_load():
 
-    data = pd.read_csv(
-        CSV_URL
-    )
+    df = pd.read_csv(CSV_URL)
 
-    data = data.dropna(
-        how="all"
-    )
+    df = df.dropna(how="all")
 
-    data.columns = (
-        data.columns
+    df.columns = (
+        df.columns
         .astype(str)
         .str.strip()
     )
 
-    data = data.fillna("")
+    df = df.fillna("")
 
-    if "STATUS" not in data.columns:
+    if "STATUS" not in df.columns:
 
-        data["STATUS"] = "NOT STARTED"
+        df["STATUS"] = "NOT STARTED"
 
-    data["STATUS"] = (
-        data["STATUS"]
+    df["STATUS"] = (
+        df["STATUS"]
         .astype(str)
         .str.strip()
         .str.upper()
     )
 
-    data.loc[
-        data["STATUS"].isin(
-            ["", "NAN"]
-        ),
+    df.loc[
+        df["STATUS"].isin(["", "NAN"]),
         "STATUS"
     ] = "NOT STARTED"
 
-    return data
+    return df
 
 
 # ============================================================
-# GET VALUE
+# VALUE
 # ============================================================
 
-def get_value(
-    record,
-    column
-):
+def get_value(record, column):
 
     if column not in record:
 
@@ -742,15 +699,11 @@ def get_value(
 # SEND UPDATE
 # ============================================================
 
-def send_update(
-    payload
-):
+def send_update(payload):
 
     data = json.dumps(
         payload
-    ).encode(
-        "utf-8"
-    )
+    ).encode("utf-8")
 
     request = urllib.request.Request(
 
@@ -771,25 +724,21 @@ def send_update(
         timeout=30
     ) as response:
 
-        response_text = (
+        text = (
             response
             .read()
-            .decode(
-                "utf-8"
-            )
+            .decode("utf-8")
         )
 
     try:
 
-        return json.loads(
-            response_text
-        )
+        return json.loads(text)
 
-    except Exception:
+    except:
 
         return {
             "success": False,
-            "message": response_text
+            "message": text
         }
 
 
@@ -797,38 +746,29 @@ def send_update(
 # SUMMARY
 # ============================================================
 
-def summary_data(data):
+def get_summary(df):
 
-    total = len(data)
+    total = len(df)
 
     completed = len(
-        data[
-            data["STATUS"]
-            == "COMPLETED"
-        ]
+        df[df["STATUS"] == "COMPLETED"]
     )
 
     progress = len(
-        data[
-            data["STATUS"]
-            == "IN PROGRESS"
-        ]
+        df[df["STATUS"] == "IN PROGRESS"]
     )
 
     not_started = len(
-        data[
-            data["STATUS"]
-            == "NOT STARTED"
-        ]
+        df[df["STATUS"] == "NOT STARTED"]
     )
 
     pending = 0
 
-    if "PENDING" in data.columns:
+    if "PENDING" in df.columns:
 
         pending = int(
             pd.to_numeric(
-                data["PENDING"],
+                df["PENDING"],
                 errors="coerce"
             )
             .fillna(0)
@@ -837,11 +777,9 @@ def summary_data(data):
 
     percent = (
 
-        completed /
-        total *
-        100
+        completed / total * 100
 
-        if total > 0
+        if total
 
         else 0
     )
@@ -874,7 +812,7 @@ CENSUS ENUMERATION PROGRESS DASHBOARD
 
 <div class="hero-sub">
 
-மக்கள் தொகை கணக்கெடுப்பு பணியின் முன்னேற்ற கண்காணிப்பு அமைப்பு
+Enumeration Monitoring & Progress System
 
 </div>
 
@@ -885,27 +823,28 @@ CENSUS ENUMERATION PROGRESS DASHBOARD
 
 
 # ============================================================
-# SESSION STATES
+# SESSION
 # ============================================================
 
 if "page" not in st.session_state:
 
     st.session_state.page = "enumerator"
 
+if "admin_logged" not in st.session_state:
 
-if "admin_logged_in" not in st.session_state:
-
-    st.session_state.admin_logged_in = False
-
+    st.session_state.admin_logged = False
 
 if "selected_enum" not in st.session_state:
 
     st.session_state.selected_enum = None
 
-
 if "record" not in st.session_state:
 
     st.session_state.record = None
+
+if "gift" not in st.session_state:
+
+    st.session_state.gift = None
 
 
 # ============================================================
@@ -913,15 +852,13 @@ if "record" not in st.session_state:
 # ============================================================
 
 st.markdown(
-    '<div class="top-menu">',
+    '<div class="menu-box">',
     unsafe_allow_html=True
 )
 
-menu1, menu2 = st.columns(
-    2
-)
+m1, m2 = st.columns(2)
 
-with menu1:
+with m1:
 
     if st.button(
         "👤 Enumerator",
@@ -933,7 +870,7 @@ with menu1:
         st.rerun()
 
 
-with menu2:
+with m2:
 
     if st.button(
         "🔐 Admin Panel",
@@ -946,23 +883,19 @@ with menu2:
 
 
 st.markdown(
-    '</div>',
+    "</div>",
     unsafe_allow_html=True
 )
 
 
 # ============================================================
-# LOAD DATA
+# DATA
 # ============================================================
 
 df = load_google_sheet()
 
 
 if df.empty:
-
-    st.error(
-        "Google Sheet-ல் தரவு இல்லை."
-    )
 
     st.stop()
 
@@ -984,27 +917,41 @@ if st.session_state.page == "enumerator":
 
 
     # ========================================================
-    # SUCCESS MINI CARD
+    # GIFT CARD
     # ========================================================
 
-    if (
-        "save_message"
-        in st.session_state
-    ):
+    if st.session_state.gift:
+
+        g = st.session_state.gift
 
         st.markdown(
-            """
-<div class="save-card">
+            f"""
+<div class="gift-card">
 
-<div class="save-card-title">
-
-✅ UPDATE SUCCESSFUL
-
+<div class="gift-title">
+🎁 UPDATE COMPLETED
 </div>
 
-<div class="save-card-small">
+<div class="gift-sub">
+Saved successfully
+</div>
 
-விவரங்கள் Google Sheet-ல் வெற்றிகரமாக சேமிக்கப்பட்டன
+<div class="gift-grid">
+
+<div class="gift-item">
+<div class="gift-label">HLB</div>
+<div class="gift-value">{g["hlb"]}</div>
+</div>
+
+<div class="gift-item">
+<div class="gift-label">STATUS</div>
+<div class="gift-value">{g["status"]}</div>
+</div>
+
+<div class="gift-item">
+<div class="gift-label">PENDING</div>
+<div class="gift-value">{g["pending"]}</div>
+</div>
 
 </div>
 
@@ -1013,11 +960,9 @@ if st.session_state.page == "enumerator":
             unsafe_allow_html=True
         )
 
-        time.sleep(2)
+        time.sleep(2.5)
 
-        del st.session_state[
-            "save_message"
-        ]
+        st.session_state.gift = None
 
         st.rerun()
 
@@ -1027,22 +972,17 @@ if st.session_state.page == "enumerator":
     # ========================================================
 
     st.markdown(
-        '<div class="section-title">'
-        '🔎 கணக்கெடுப்பாளரைத் தேர்வு செய்யவும்'
-        '</div>',
+        '<div class="section-title">🔎 Enumerator</div>',
         unsafe_allow_html=True
     )
 
 
     enumerators = (
-        df[
-            HLB_COLUMN
-        ]
+        df[HLB_COLUMN]
         .astype(str)
         .str.strip()
         .tolist()
     )
-
 
     enumerators = [
         x for x in enumerators
@@ -1051,9 +991,7 @@ if st.session_state.page == "enumerator":
 
 
     options = [
-
         "— Select Enumerator —"
-
     ] + enumerators
 
 
@@ -1063,10 +1001,6 @@ if st.session_state.page == "enumerator":
     )
 
 
-    # IMPORTANT:
-    # No text_input here.
-    # Therefore mobile keyboard will not cover SEARCH.
-
     selected = st.selectbox(
 
         "Enumerator",
@@ -1075,12 +1009,14 @@ if st.session_state.page == "enumerator":
 
         index=0,
 
-        key="enum_dropdown"
+        key="enum_select"
 
     )
 
 
-    # SEARCH BUTTON IS IMMEDIATELY BELOW DROPDOWN
+    # ========================================================
+    # SEARCH BUTTON
+    # ========================================================
 
     search_clicked = st.button(
 
@@ -1090,13 +1026,13 @@ if st.session_state.page == "enumerator":
 
         width="stretch",
 
-        key="search_button"
+        key="search"
 
     )
 
 
     st.markdown(
-        '</div>',
+        "</div>",
         unsafe_allow_html=True
     )
 
@@ -1110,19 +1046,18 @@ if st.session_state.page == "enumerator":
         if selected == "— Select Enumerator —":
 
             st.warning(
-                "⚠️ முதலில் Enumerator-ஐ தேர்வு செய்யவும்."
+                "Select Enumerator"
             )
 
         else:
 
             with st.spinner(
-                "Google Sheet data loading..."
+                "Loading..."
             ):
 
                 try:
 
                     latest = fresh_load()
-
 
                     found = latest[
                         latest[
@@ -1137,18 +1072,14 @@ if st.session_state.page == "enumerator":
                     if found.empty:
 
                         st.error(
-                            "❌ Enumerator கிடைக்கவில்லை."
+                            "Enumerator not found"
                         )
 
                     else:
 
-                        st.session_state[
-                            "selected_enum"
-                        ] = selected
+                        st.session_state.selected_enum = selected
 
-                        st.session_state[
-                            "record"
-                        ] = (
+                        st.session_state.record = (
                             found
                             .iloc[0]
                             .to_dict()
@@ -1160,69 +1091,37 @@ if st.session_state.page == "enumerator":
                 except Exception as e:
 
                     st.error(
-                        "❌ Google Sheet loading error."
+                        "Loading error"
                     )
 
-                    st.code(
-                        str(e)
-                    )
+                    st.code(str(e))
 
 
     # ========================================================
-    # DISPLAY SEARCHED RECORD
+    # NO RECORD
     # ========================================================
 
-    if (
-        st.session_state.record
-        is None
-    ):
-
-        st.info(
-            "👆 Enumerator-ஐ தேர்வு செய்து SEARCH அழுத்தவும்."
-        )
+    if st.session_state.record is None:
 
         st.stop()
 
 
-    record = (
-        st.session_state.record
-    )
+    record = st.session_state.record
 
-    selected_enum = (
-        st.session_state.selected_enum
-    )
+    selected_enum = st.session_state.selected_enum
 
 
     # ========================================================
-    # STATUS
-    # ========================================================
-
-    current_status = get_value(
-        record,
-        "STATUS"
-    ).upper()
-
-
-    if not current_status:
-
-        current_status = "NOT STARTED"
-
-
-    # ========================================================
-    # ENUMERATOR DETAILS
+    # DETAILS
     # ========================================================
 
     st.markdown(
-        '<div class="section-title">'
-        '📋 Enumerator Details'
-        '</div>',
+        '<div class="section-title">Enumerator Details</div>',
         unsafe_allow_html=True
     )
 
 
-    # ========================================================
-    # HLB NUMBER
-    # ========================================================
+    # HLB
 
     st.markdown(
         f"""
@@ -1233,10 +1132,7 @@ HLB NUMBER - ENUMERATOR
 </div>
 
 <div class="info-value">
-{get_value(
-    record,
-    HLB_COLUMN
-)}
+{get_value(record, HLB_COLUMN)}
 </div>
 
 </div>
@@ -1245,9 +1141,7 @@ HLB NUMBER - ENUMERATOR
     )
 
 
-    # ========================================================
     # MOBILE
-    # ========================================================
 
     st.markdown(
         f"""
@@ -1258,10 +1152,7 @@ ENUMERATOR MOBILE NUMBER
 </div>
 
 <div class="info-value">
-📱 {get_value(
-    record,
-    "ENUMERATOR MOBILE NUMBER"
-)}
+📱 {get_value(record, "ENUMERATOR MOBILE NUMBER")}
 </div>
 
 </div>
@@ -1270,9 +1161,7 @@ ENUMERATOR MOBILE NUMBER
     )
 
 
-    # ========================================================
-    # HLB DESCRIPTION
-    # ========================================================
+    # DESCRIPTION
 
     st.markdown(
         f"""
@@ -1283,10 +1172,7 @@ HLB DESCRIPTION
 </div>
 
 <div class="info-value">
-{get_value(
-    record,
-    "HLB DESCRIPTION"
-)}
+{get_value(record, "HLB DESCRIPTION")}
 </div>
 
 </div>
@@ -1296,57 +1182,47 @@ HLB DESCRIPTION
 
 
     # ========================================================
-    # STATUS DISPLAY
+    # CURRENT STATUS
     # ========================================================
+
+    current_status = get_value(
+        record,
+        "STATUS"
+    ).upper()
+
+    if not current_status:
+
+        current_status = "NOT STARTED"
+
 
     if current_status == "COMPLETED":
 
         st.markdown(
             """
-<div class="status-completed">
-
+<div class="status-card status-completed">
 🟢 COMPLETED
-
-<br>
-
-பணி முழுமையாக முடிக்கப்பட்டுள்ளது
-
 </div>
 """,
             unsafe_allow_html=True
         )
-
 
     elif current_status == "IN PROGRESS":
 
         st.markdown(
             """
-<div class="status-progress">
-
+<div class="status-card status-progress">
 🟡 IN PROGRESS
-
-<br>
-
-பணி நடைபெற்று வருகிறது
-
 </div>
 """,
             unsafe_allow_html=True
         )
-
 
     else:
 
         st.markdown(
             """
-<div class="status-notstarted">
-
+<div class="status-card status-notstarted">
 🔴 NOT STARTED
-
-<br>
-
-பணி இன்னும் தொடங்கப்படவில்லை
-
 </div>
 """,
             unsafe_allow_html=True
@@ -1354,66 +1230,54 @@ HLB DESCRIPTION
 
 
     # ========================================================
-    # UPDATE AREA
+    # COMPLETED
     # ========================================================
 
     if current_status == "COMPLETED":
 
         st.success(
-            "🔒 இந்த Enumerator COMPLETED நிலையில் LOCK செய்யப்பட்டுள்ளது."
+            "🔒 Completed"
         )
-
 
         completed_date = get_value(
             record,
             "COMPLETED DATE"
         )
 
-
         if completed_date:
 
-            st.info(
+            st.caption(
                 f"Completed Date: {completed_date}"
             )
-
 
         remarks = get_value(
             record,
             "REMARKS"
         )
 
-
         if remarks:
-
-            st.markdown(
-                "**குறிப்புகள்:**"
-            )
 
             st.info(
                 remarks
             )
 
 
+    # ========================================================
+    # UPDATE
+    # ========================================================
+
     else:
 
         st.markdown(
-            '<div class="section-title">'
-            '📝 கணக்கெடுப்பு புதுப்பிப்பு'
-            '</div>',
+            '<div class="section-title">Update Enumeration</div>',
             unsafe_allow_html=True
         )
 
 
-        # ====================================================
-        # STATUS
-        # ====================================================
-
-        statuses = [
+        status_options = [
 
             "NOT STARTED",
-
             "IN PROGRESS",
-
             "COMPLETED"
 
         ]
@@ -1421,24 +1285,25 @@ HLB DESCRIPTION
 
         try:
 
-            status_index = statuses.index(
-                current_status
+            default_status = (
+                status_options
+                .index(current_status)
             )
 
-        except Exception:
+        except:
 
-            status_index = 0
+            default_status = 0
 
 
         status = st.selectbox(
 
-            "பணி நிலை",
+            "Status",
 
-            statuses,
+            status_options,
 
-            index=status_index,
+            index=default_status,
 
-            key="status_update"
+            key="status"
 
         )
 
@@ -1449,7 +1314,7 @@ HLB DESCRIPTION
 
         try:
 
-            current_pending = int(
+            old_pending = int(
                 float(
                     get_value(
                         record,
@@ -1458,35 +1323,24 @@ HLB DESCRIPTION
                 )
             )
 
-        except Exception:
+        except:
 
-            current_pending = 0
+            old_pending = 0
 
 
         pending = st.number_input(
 
-            "📌 நிலுவையில் உள்ள எண்ணிக்கை",
+            "Pending Count",
 
             min_value=0,
 
-            value=current_pending,
+            value=old_pending,
 
             step=1,
 
-            key="pending_update"
+            key="pending"
 
         )
-
-
-        # ====================================================
-        # IN PROGRESS NOTICE
-        # ====================================================
-
-        if status == "IN PROGRESS":
-
-            st.warning(
-                "⚠️ IN PROGRESS என்றால் Pending Count மற்றும் Reason கட்டாயம்."
-            )
 
 
         # ====================================================
@@ -1499,7 +1353,7 @@ HLB DESCRIPTION
 
             value=date.today(),
 
-            key="expected_date_update"
+            key="expected"
 
         )
 
@@ -1508,55 +1362,46 @@ HLB DESCRIPTION
         # REMARKS
         # ====================================================
 
-        current_remarks = get_value(
-            record,
-            "REMARKS"
-        )
-
-
         remarks = st.text_area(
 
-            "📝 காரணம் / குறிப்புகள்",
+            "Reason / Remarks",
 
-            value=current_remarks,
+            value=get_value(
+                record,
+                "REMARKS"
+            ),
 
-            height=85,
+            height=75,
 
-            placeholder=
-            "நிலுவைக்கான காரணத்தை பதிவு செய்யவும்.",
-
-            key="remarks_update"
+            key="remarks"
 
         )
 
 
         # ====================================================
-        # SAVE UPDATE
+        # SAVE
         # ====================================================
 
         if st.button(
 
-            "SAVE UPDATE",
+            "💾 SAVE UPDATE",
 
             type="primary",
 
             width="stretch",
 
-            key="save_update_button"
+            key="save"
 
         ):
 
-
-            # ------------------------------------------------
-            # VALIDATION
-            # ------------------------------------------------
+            # IN PROGRESS VALIDATION
 
             if status == "IN PROGRESS":
 
                 if pending <= 0:
 
                     st.error(
-                        "❌ Pending Count கட்டாயம்."
+                        "Pending Count required"
                     )
 
                     st.stop()
@@ -1565,24 +1410,18 @@ HLB DESCRIPTION
                 if not remarks.strip():
 
                     st.error(
-                        "❌ Reason / Remarks கட்டாயம்."
+                        "Reason required"
                     )
 
                     st.stop()
 
 
-            # ------------------------------------------------
             # COMPLETED
-            # ------------------------------------------------
 
             if status == "COMPLETED":
 
                 pending = 0
 
-
-            # ------------------------------------------------
-            # PAYLOAD
-            # ------------------------------------------------
 
             payload = {
 
@@ -1615,12 +1454,8 @@ HLB DESCRIPTION
             }
 
 
-            # ------------------------------------------------
-            # SAVE
-            # ------------------------------------------------
-
             with st.spinner(
-                "Google Sheet-ல் சேமிக்கப்படுகிறது..."
+                "Saving..."
             ):
 
                 try:
@@ -1634,34 +1469,33 @@ HLB DESCRIPTION
                         "success"
                     ):
 
-                        # ------------------------------------
-                        # MINI SCORE CARD FLAG
-                        # ------------------------------------
+                        # ====================================
+                        # GIFT DATA
+                        # ====================================
 
-                        st.session_state[
-                            "save_message"
-                        ] = True
+                        st.session_state.gift = {
+
+                            "hlb":
+                            selected_enum,
+
+                            "status":
+                            status,
+
+                            "pending":
+                            pending
+
+                        }
 
 
-                        # ------------------------------------
-                        # CLEAR CACHE
-                        # ------------------------------------
+                        # ====================================
+                        # CLEAR
+                        # ====================================
+
+                        st.session_state.record = None
+
+                        st.session_state.selected_enum = None
 
                         st.cache_data.clear()
-
-
-                        # ------------------------------------
-                        # CLEAR OLD RECORD
-                        # ------------------------------------
-
-                        st.session_state[
-                            "record"
-                        ] = None
-
-                        st.session_state[
-                            "selected_enum"
-                        ] = None
-
 
                         st.rerun()
 
@@ -1669,13 +1503,13 @@ HLB DESCRIPTION
                     else:
 
                         st.error(
-                            "❌ SAVE FAILED"
+                            "Save failed"
                         )
 
                         st.code(
                             result.get(
                                 "message",
-                                "Unknown error"
+                                ""
                             )
                         )
 
@@ -1683,16 +1517,14 @@ HLB DESCRIPTION
                 except Exception as e:
 
                     st.error(
-                        "❌ Connection error"
+                        "Connection error"
                     )
 
-                    st.code(
-                        str(e)
-                    )
+                    st.code(str(e))
 
 
     # ========================================================
-    # OVERALL PROGRESS
+    # OVERALL
     # ========================================================
 
     st.divider()
@@ -1704,28 +1536,22 @@ HLB DESCRIPTION
         in_progress,
         not_started,
         total_pending,
-        percentage
-    ) = summary_data(
-        df
-    )
+        percent
+    ) = get_summary(df)
 
 
     st.markdown(
-        '<div class="section-title">'
-        'Overall Progress'
-        '</div>',
+        '<div class="section-title">Overall Progress</div>',
         unsafe_allow_html=True
     )
 
 
-    # ========================================================
-    # SCORE CARDS
-    # ========================================================
+    # SCORE 3
 
-    c1, c2, c3 = st.columns(3)
+    a, b, c = st.columns(3)
 
 
-    with c1:
+    with a:
 
         st.markdown(
             f"""
@@ -1745,7 +1571,7 @@ TOTAL ENUMERATOR
         )
 
 
-    with c2:
+    with b:
 
         st.markdown(
             f"""
@@ -1765,7 +1591,7 @@ TOTAL ENUMERATOR
         )
 
 
-    with c3:
+    with c:
 
         st.markdown(
             f"""
@@ -1785,10 +1611,12 @@ TOTAL PENDING
         )
 
 
-    c1, c2 = st.columns(2)
+    # SCORE 2
+
+    a, b = st.columns(2)
 
 
-    with c1:
+    with a:
 
         st.markdown(
             f"""
@@ -1808,7 +1636,7 @@ TOTAL PENDING
         )
 
 
-    with c2:
+    with b:
 
         st.markdown(
             f"""
@@ -1833,21 +1661,18 @@ TOTAL PENDING
     # ========================================================
 
     st.progress(
-        int(percentage)
+        int(percent)
     )
-
 
     st.markdown(
         f"""
 <div style="
 text-align:center;
-font-size:13px;
-font-weight:950;
-margin-top:-3px;
+font-weight:900;
+font-size:12px;
 ">
 
-மொத்த முன்னேற்றம்:
-{percentage:.1f}%
+{percent:.1f}% Completed
 
 </div>
 """,
@@ -1861,22 +1686,18 @@ margin-top:-3px;
 
     chart_data = pd.DataFrame({
 
-        "STATUS": [
+        "Status": [
 
             "COMPLETED",
-
             "IN PROGRESS",
-
             "NOT STARTED"
 
         ],
 
-        "COUNT": [
+        "Count": [
 
             completed,
-
             in_progress,
-
             not_started
 
         ]
@@ -1888,11 +1709,11 @@ margin-top:-3px;
 
         chart_data,
 
-        names="STATUS",
+        names="Status",
 
-        values="COUNT",
+        values="Count",
 
-        hole=0.62
+        hole=.62
 
     )
 
@@ -1907,10 +1728,10 @@ margin-top:-3px;
         title={
             "text":
             "Enumerator Status",
-            "x": 0.5
+            "x": .5
         },
 
-        height=290,
+        height=280,
 
         margin=dict(
             l=0,
@@ -1919,12 +1740,10 @@ margin-top:-3px;
             b=0
         ),
 
-        showlegend=True,
-
         legend=dict(
             orientation="h",
-            y=-0.08,
-            x=0.5,
+            y=-.08,
+            x=.5,
             xanchor="center"
         )
 
@@ -1945,20 +1764,18 @@ margin-top:-3px;
 
 
     # ========================================================
-    # ENUMERATOR STATUS TABLE
+    # STATUS TABLE
     # ========================================================
 
     st.markdown(
-        '<div class="section-title">'
-        'Enumerator Status'
-        '</div>',
+        '<div class="section-title">Enumerator Status</div>',
         unsafe_allow_html=True
     )
 
 
-    table_status = st.selectbox(
+    filter_status = st.selectbox(
 
-        "பணி நிலையைத் தேர்வு செய்யவும்",
+        "Status",
 
         [
             "ALL",
@@ -1967,19 +1784,19 @@ margin-top:-3px;
             "NOT STARTED"
         ],
 
-        key="enum_status_filter"
+        key="status_filter"
 
     )
 
 
-    status_df = df.copy()
+    table_df = df.copy()
 
 
-    if table_status != "ALL":
+    if filter_status != "ALL":
 
-        status_df = status_df[
-            status_df["STATUS"]
-            == table_status
+        table_df = table_df[
+            table_df["STATUS"]
+            == filter_status
         ]
 
 
@@ -2006,14 +1823,14 @@ margin-top:-3px;
 
         x for x in table_columns
 
-        if x in status_df.columns
+        if x in table_df.columns
 
     ]
 
 
     st.dataframe(
 
-        status_df[
+        table_df[
             table_columns
         ],
 
@@ -2021,79 +1838,57 @@ margin-top:-3px;
 
         hide_index=True,
 
-        height=350
+        height=320
 
     )
 
 
 # ============================================================
-# ADMIN PAGE
+# ADMIN
 # ============================================================
 
 else:
 
 
-    # ========================================================
-    # ADMIN LOGIN
-    # ========================================================
-
-    st.markdown(
-        '<div class="section-title">'
-        'Admin Login'
-        '</div>',
-        unsafe_allow_html=True
-    )
+    if not st.session_state.admin_logged:
 
 
-    if not st.session_state.admin_logged_in:
-
-
-        username = st.text_input(
-            "பயனர் பெயர்"
+        st.markdown(
+            '<div class="section-title">Admin Login</div>',
+            unsafe_allow_html=True
         )
 
 
+        username = st.text_input(
+            "Username"
+        )
+
         password = st.text_input(
-            "கடவுச்சொல்",
+            "Password",
             type="password"
         )
 
 
-        login = st.button(
-
+        if st.button(
             "🔐 LOGIN",
-
             type="primary",
-
             width="stretch"
-
-        )
-
-
-        if login:
+        ):
 
             if (
-
-                username
-                ==
-                ADMIN_USERNAME
-
+                username == ADMIN_USERNAME
                 and
-
-                password
-                ==
-                ADMIN_PASSWORD
-
+                password == ADMIN_PASSWORD
             ):
 
-                st.session_state.admin_logged_in = True
+                st.session_state.admin_logged = True
 
                 st.rerun()
 
             else:
 
                 st.error(
-                    "❌ பயனர் பெயர் அல்லது கடவுச்சொல் தவறாக உள்ளது."
+                    "Invalid Login"
                 )
 
 
@@ -2109,13 +1904,9 @@ else:
     )
 
 
-    # ========================================================
-    # ADMIN MENU
-    # ========================================================
-
     admin_menu = st.radio(
 
-        "Admin Panel Menu",
+        "Admin Menu",
 
         [
 
@@ -2132,11 +1923,8 @@ else:
     )
 
 
-    st.divider()
-
-
     # ========================================================
-    # DASHBOARD
+    # ADMIN DASHBOARD
     # ========================================================
 
     if admin_menu == "📊 Dashboard":
@@ -2148,16 +1936,14 @@ else:
             in_progress,
             not_started,
             total_pending,
-            percentage
-        ) = summary_data(
-            df
-        )
+            percent
+        ) = get_summary(df)
 
 
-        c1, c2, c3 = st.columns(3)
+        a, b, c = st.columns(3)
 
 
-        with c1:
+        with a:
 
             st.metric(
                 "TOTAL ENUMERATOR",
@@ -2165,7 +1951,7 @@ else:
             )
 
 
-        with c2:
+        with b:
 
             st.metric(
                 "🟢 COMPLETED",
@@ -2173,7 +1959,7 @@ else:
             )
 
 
-        with c3:
+        with c:
 
             st.metric(
                 "TOTAL PENDING",
@@ -2181,10 +1967,10 @@ else:
             )
 
 
-        c1, c2 = st.columns(2)
+        a, b = st.columns(2)
 
 
-        with c1:
+        with a:
 
             st.metric(
                 "🟡 IN PROGRESS",
@@ -2192,7 +1978,7 @@ else:
             )
 
 
-        with c2:
+        with b:
 
             st.metric(
                 "🔴 NOT STARTED",
@@ -2201,44 +1987,24 @@ else:
 
 
         st.progress(
-            int(percentage)
+            int(percent)
         )
 
 
-        st.markdown(
-            f"""
-<div style="
-text-align:center;
-font-weight:950;
-">
+        chart = pd.DataFrame({
 
-மொத்த முன்னேற்றம்:
-{percentage:.1f}%
-
-</div>
-""",
-            unsafe_allow_html=True
-        )
-
-
-        chart_data = pd.DataFrame({
-
-            "STATUS": [
+            "Status": [
 
                 "COMPLETED",
-
                 "IN PROGRESS",
-
                 "NOT STARTED"
 
             ],
 
-            "COUNT": [
+            "Count": [
 
                 completed,
-
                 in_progress,
-
                 not_started
 
             ]
@@ -2248,73 +2014,41 @@ font-weight:950;
 
         fig = px.pie(
 
-            chart_data,
+            chart,
 
-            names="STATUS",
+            names="Status",
 
-            values="COUNT",
+            values="Count",
 
-            hole=0.60
+            hole=.6
 
-        )
-
-
-        fig.update_traces(
-            textinfo="label+percent"
         )
 
 
         fig.update_layout(
-
-            title={
-                "text":
-                "Enumerator Status",
-                "x": 0.5
-            },
-
-            height=350,
-
-            margin=dict(
-                l=0,
-                r=0,
-                t=50,
-                b=0
-            )
-
+            height=330
         )
 
 
         st.plotly_chart(
-
             fig,
-
             width="stretch",
-
             config={
                 "displayModeBar": False
             }
-
         )
 
 
     # ========================================================
-    # ENUMERATOR STATUS
+    # ADMIN STATUS
     # ========================================================
 
     elif admin_menu == "📋 Enumerator Status":
 
 
-        st.markdown(
-            '<div class="section-title">'
-            'Enumerator Status'
-            '</div>',
-            unsafe_allow_html=True
-        )
+        filter_status = st.selectbox(
 
-
-        status_filter = st.selectbox(
-
-            "பணி நிலை",
+            "Status",
 
             [
                 "ALL",
@@ -2329,11 +2063,11 @@ font-weight:950;
         admin_df = df.copy()
 
 
-        if status_filter != "ALL":
+        if filter_status != "ALL":
 
             admin_df = admin_df[
                 admin_df["STATUS"]
-                == status_filter
+                == filter_status
             ]
 
 
@@ -2398,9 +2132,7 @@ font-weight:950;
 
 
         st.markdown(
-            '<div class="section-title">'
-            'Full Enumeration Report'
-            '</div>',
+            '<div class="section-title">Full Enumeration Report</div>',
             unsafe_allow_html=True
         )
 
@@ -2413,21 +2145,15 @@ font-weight:950;
 
             hide_index=True,
 
-            height=550
+            height=500
 
         )
 
 
         csv_data = (
-
             df
-            .to_csv(
-                index=False
-            )
-            .encode(
-                "utf-8"
-            )
-
+            .to_csv(index=False)
+            .encode("utf-8")
         )
 
 
@@ -2437,11 +2163,9 @@ font-weight:950;
 
             data=csv_data,
 
-            file_name=
-            "Enumeration_Report.csv",
+            file_name="Enumeration_Report.csv",
 
-            mime=
-            "text/csv",
+            mime="text/csv",
 
             width="stretch"
 
@@ -2449,7 +2173,7 @@ font-weight:950;
 
 
     # ========================================================
-    # ADMIN LOGOUT
+    # LOGOUT
     # ========================================================
 
     st.divider()
@@ -2460,7 +2184,7 @@ font-weight:950;
         width="stretch"
     ):
 
-        st.session_state.admin_logged_in = False
+        st.session_state.admin_logged = False
 
         st.session_state.page = "enumerator"
 
@@ -2474,5 +2198,5 @@ font-weight:950;
 st.divider()
 
 st.caption(
-    "📋 ANAIMALAI TALUK • Census Enumeration • Google Sheet Live Data"
+    "ANAIMALAI TALUK • Census Enumeration"
 )
