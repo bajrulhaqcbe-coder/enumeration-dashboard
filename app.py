@@ -19,7 +19,7 @@ st.set_page_config(
 
 
 # ============================================================
-# GOOGLE SHEET CONFIG
+# GOOGLE SHEET
 # ============================================================
 
 SHEET_ID = "1vmxjbYABVPbu5PUVSLQO0H8J3TTflyTgGKOj5nH9Q14"
@@ -43,7 +43,7 @@ APPS_SCRIPT_URL = (
 
 
 # ============================================================
-# ADMIN LOGIN
+# ADMIN
 # ============================================================
 
 ADMIN_USERNAME = "admin"
@@ -58,22 +58,16 @@ HLB_COLUMN = "HLB NUMBER-ENUMERATOR NAME"
 
 
 # ============================================================
-# CUSTOM CSS
+# CSS
 # ============================================================
 
 st.markdown(
     """
 <style>
 
-/* ============================================================
-GLOBAL
-============================================================ */
+/* ================= GLOBAL ================= */
 
 #MainMenu {
-    visibility: hidden;
-}
-
-footer {
     visibility: hidden;
 }
 
@@ -81,18 +75,20 @@ header {
     visibility: hidden;
 }
 
+footer {
+    visibility: hidden;
+}
+
 .block-container {
     max-width: 1150px;
-    padding-top: 0.5rem;
-    padding-left: 0.7rem;
-    padding-right: 0.7rem;
+    padding-top: 0.4rem;
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
     padding-bottom: 2rem;
 }
 
 
-/* ============================================================
-HEADER
-============================================================ */
+/* ================= HEADER ================= */
 
 .dashboard-header {
     background: linear-gradient(
@@ -106,7 +102,7 @@ HEADER
 
     border-radius: 20px;
 
-    padding: 20px 15px;
+    padding: 20px 14px;
 
     text-align: center;
 
@@ -125,47 +121,24 @@ HEADER
 .dashboard-subtitle {
     margin-top: 6px;
     font-size: 13px;
-    opacity: 0.90;
+    opacity: 0.9;
 }
 
 
-/* ============================================================
-SECTION TITLE
-============================================================ */
+/* ================= SECTION ================= */
 
 .section-title {
     font-size: 21px;
-    font-weight: 850;
+    font-weight: 900;
     color: #0f172a;
     margin-top: 8px;
     margin-bottom: 12px;
 }
 
 
-/* ============================================================
-SEARCH CARD
-============================================================ */
+/* ================= CARD ================= */
 
-.search-card {
-    background: #ffffff;
-
-    border: 1px solid #e2e8f0;
-
-    border-radius: 18px;
-
-    padding: 16px;
-
-    box-shadow:
-        0 5px 18px rgba(15,23,42,0.07);
-
-    margin-bottom: 18px;
-}
-
-
-/* ============================================================
-FULL REPORT CARD
-============================================================ */
-
+.search-card,
 .report-card {
     background: #ffffff;
 
@@ -182,9 +155,7 @@ FULL REPORT CARD
 }
 
 
-/* ============================================================
-INFO BOX
-============================================================ */
+/* ================= INFO BOX ================= */
 
 .info-box {
     background: #f8fafc;
@@ -197,7 +168,7 @@ INFO BOX
 
     margin-bottom: 10px;
 
-    min-height: 60px;
+    min-height: 58px;
 }
 
 .info-label {
@@ -223,15 +194,11 @@ INFO BOX
 }
 
 
-/* ============================================================
-STATUS BADGES
-============================================================ */
+/* ================= STATUS ================= */
 
 .status-completed {
     background: #dcfce7;
-
     color: #166534;
-
     border: 1px solid #86efac;
 
     padding: 11px;
@@ -240,16 +207,14 @@ STATUS BADGES
 
     text-align: center;
 
-    font-weight: 850;
+    font-weight: 900;
 
     margin-bottom: 14px;
 }
 
 .status-progress {
     background: #fef3c7;
-
     color: #92400e;
-
     border: 1px solid #fcd34d;
 
     padding: 11px;
@@ -258,16 +223,14 @@ STATUS BADGES
 
     text-align: center;
 
-    font-weight: 850;
+    font-weight: 900;
 
     margin-bottom: 14px;
 }
 
 .status-notstarted {
     background: #fee2e2;
-
     color: #991b1b;
-
     border: 1px solid #fca5a5;
 
     padding: 11px;
@@ -276,54 +239,13 @@ STATUS BADGES
 
     text-align: center;
 
-    font-weight: 850;
+    font-weight: 900;
 
     margin-bottom: 14px;
 }
 
 
-/* ============================================================
-PENDING CARD
-============================================================ */
-
-.pending-card {
-    background: linear-gradient(
-        135deg,
-        #fff7ed,
-        #ffedd5
-    );
-
-    border: 1px solid #fed7aa;
-
-    border-radius: 18px;
-
-    padding: 15px;
-
-    text-align: center;
-
-    margin: 10px 0 15px 0;
-}
-
-.pending-number {
-    color: #c2410c;
-
-    font-size: 30px;
-
-    font-weight: 950;
-}
-
-.pending-label {
-    color: #9a3412;
-
-    font-size: 11px;
-
-    font-weight: 850;
-}
-
-
-/* ============================================================
-SUMMARY CARDS
-============================================================ */
+/* ================= SUMMARY ================= */
 
 .summary-card {
     border-radius: 15px;
@@ -342,46 +264,35 @@ SUMMARY CARDS
 
 .summary-number {
     font-size: 25px;
-
     font-weight: 900;
-
     color: #0f172a;
 }
 
 .summary-label {
     font-size: 10px;
-
     font-weight: 800;
-
     color: #64748b;
 }
 
 
-/* ============================================================
-BUTTON
-============================================================ */
+/* ================= BUTTON ================= */
 
 .stButton > button {
     width: 100%;
-
     min-height: 45px;
-
     border-radius: 11px;
-
     font-weight: 850;
 }
 
 
-/* ============================================================
-MOBILE
-============================================================ */
+/* ================= MOBILE ================= */
 
 @media only screen and (max-width: 768px) {
 
     .block-container {
-        padding-top: 0.3rem;
-        padding-left: 0.4rem;
-        padding-right: 0.4rem;
+        padding-top: 0.2rem;
+        padding-left: 0.35rem;
+        padding-right: 0.35rem;
     }
 
     .dashboard-header {
@@ -410,7 +321,7 @@ MOBILE
 
     .info-box {
         padding: 9px;
-        min-height: 54px;
+        min-height: 52px;
     }
 
     .info-label {
@@ -436,10 +347,6 @@ MOBILE
     div[data-testid="stMetricValue"] {
         font-size: 19px;
     }
-
-    [data-testid="stDataFrame"] {
-        font-size: 9px;
-    }
 }
 
 </style>
@@ -459,9 +366,7 @@ def load_google_sheet():
 
         data = pd.read_csv(CSV_URL)
 
-        data = data.dropna(
-            how="all"
-        )
+        data = data.dropna(how="all")
 
         data.columns = (
             data.columns
@@ -472,7 +377,6 @@ def load_google_sheet():
         data = data.fillna("")
 
         if "STATUS" not in data.columns:
-
             data["STATUS"] = "NOT STARTED"
 
         data["STATUS"] = (
@@ -483,9 +387,7 @@ def load_google_sheet():
         )
 
         data.loc[
-            data["STATUS"].isin(
-                ["", "NAN"]
-            ),
+            data["STATUS"].isin(["", "NAN"]),
             "STATUS"
         ] = "NOT STARTED"
 
@@ -500,6 +402,42 @@ def load_google_sheet():
         st.code(str(e))
 
         return pd.DataFrame()
+
+
+# ============================================================
+# FRESH GOOGLE SHEET LOAD
+# ============================================================
+
+def load_fresh_google_sheet():
+
+    data = pd.read_csv(CSV_URL)
+
+    data = data.dropna(how="all")
+
+    data.columns = (
+        data.columns
+        .astype(str)
+        .str.strip()
+    )
+
+    data = data.fillna("")
+
+    if "STATUS" not in data.columns:
+        data["STATUS"] = "NOT STARTED"
+
+    data["STATUS"] = (
+        data["STATUS"]
+        .astype(str)
+        .str.strip()
+        .str.upper()
+    )
+
+    data.loc[
+        data["STATUS"].isin(["", "NAN"]),
+        "STATUS"
+    ] = "NOT STARTED"
+
+    return data
 
 
 # ============================================================
@@ -534,7 +472,7 @@ def send_update(payload):
         data=data,
         headers={
             "Content-Type":
-                "application/json"
+            "application/json"
         },
         method="POST"
     )
@@ -565,7 +503,7 @@ def send_update(payload):
 
 
 # ============================================================
-# CALCULATE SUMMARY
+# SUMMARY
 # ============================================================
 
 def calculate_summary(data):
@@ -590,11 +528,11 @@ def calculate_summary(data):
         ]
     )
 
-    pending = 0
+    total_pending = 0
 
     if "PENDING" in data.columns:
 
-        pending = int(
+        total_pending = int(
             pd.to_numeric(
                 data["PENDING"],
                 errors="coerce"
@@ -614,7 +552,7 @@ def calculate_summary(data):
         completed,
         in_progress,
         not_started,
-        pending,
+        total_pending,
         percentage
     )
 
@@ -721,12 +659,12 @@ with st.sidebar:
 if mode == "👤 Enumerator":
 
     # ========================================================
-    # ENUMERATOR SEARCH
+    # SELECT ENUMERATOR
     # ========================================================
 
     st.markdown(
         '<div class="section-title">'
-        '👤 Enumerator Selection'
+        '👤 Select Enumerator'
         '</div>',
         unsafe_allow_html=True
     )
@@ -736,6 +674,7 @@ if mode == "👤 Enumerator":
         unsafe_allow_html=True
     )
 
+
     enumerators = (
         df[HLB_COLUMN]
         .astype(str)
@@ -743,16 +682,31 @@ if mode == "👤 Enumerator":
         .tolist()
     )
 
+
     enumerators = [
         x for x in enumerators
         if x
     ]
 
+
+    # IMPORTANT:
+    # FIRST OPTION
+    dropdown_options = [
+        "-- Select Enumerator --"
+    ] + enumerators
+
+
     selected = st.selectbox(
-        "Select HLB Number - Enumerator",
-        enumerators,
+        "HLB Number - Enumerator",
+        dropdown_options,
+        index=0,
         key="enum_selector"
     )
+
+
+    # ========================================================
+    # SEARCH BUTTON
+    # ========================================================
 
     if st.button(
         "🔍 SEARCH ENUMERATOR",
@@ -760,51 +714,37 @@ if mode == "👤 Enumerator":
         width="stretch"
     ):
 
+        # ----------------------------------------------
+        # MUST SELECT ENUMERATOR
+        # ----------------------------------------------
+
+        if selected == "-- Select Enumerator --":
+
+            st.warning(
+                "⚠️ Please select an Enumerator first."
+            )
+
+            st.stop()
+
+
+        # ----------------------------------------------
+        # LOAD LATEST GOOGLE SHEET
+        # ----------------------------------------------
+
         with st.spinner(
-            "Loading latest Google Sheet data..."
+            "🔄 Loading latest Google Sheet data..."
         ):
 
             try:
 
-                latest_df = pd.read_csv(
-                    CSV_URL
-                )
-
                 latest_df = (
-                    latest_df
-                    .dropna(how="all")
+                    load_fresh_google_sheet()
                 )
 
-                latest_df.columns = (
-                    latest_df.columns
-                    .astype(str)
-                    .str.strip()
-                )
 
-                latest_df = (
-                    latest_df
-                    .fillna("")
-                )
-
-                if "STATUS" not in latest_df.columns:
-
-                    latest_df["STATUS"] = (
-                        "NOT STARTED"
-                    )
-
-                latest_df["STATUS"] = (
-                    latest_df["STATUS"]
-                    .astype(str)
-                    .str.strip()
-                    .str.upper()
-                )
-
-                latest_df.loc[
-                    latest_df["STATUS"].isin(
-                        ["", "NAN"]
-                    ),
-                    "STATUS"
-                ] = "NOT STARTED"
+                # --------------------------------------
+                # FIND ENUMERATOR
+                # --------------------------------------
 
                 rows = latest_df[
                     latest_df[HLB_COLUMN]
@@ -813,29 +753,42 @@ if mode == "👤 Enumerator":
                     == selected
                 ]
 
+
                 if rows.empty:
 
                     st.error(
-                        "❌ Enumerator not found."
+                        "❌ Enumerator not found in Google Sheet."
                     )
 
-                else:
+                    st.stop()
 
-                    st.session_state[
-                        "searched_enumerator"
-                    ] = selected
 
-                    st.session_state[
-                        "searched_record"
-                    ] = (
-                        rows
-                        .iloc[0]
-                        .to_dict()
-                    )
+                # --------------------------------------
+                # SAVE SEARCH RESULT
+                # --------------------------------------
 
-                    st.success(
-                        "✅ Enumerator data loaded successfully."
-                    )
+                st.session_state[
+                    "searched_enumerator"
+                ] = selected
+
+
+                st.session_state[
+                    "searched_record"
+                ] = (
+                    rows
+                    .iloc[0]
+                    .to_dict()
+                )
+
+
+                # Also update cached data
+                st.cache_data.clear()
+
+
+                st.success(
+                    "✅ Enumerator details loaded successfully."
+                )
+
 
             except Exception as e:
 
@@ -843,7 +796,9 @@ if mode == "👤 Enumerator":
                     "❌ Unable to load Google Sheet."
                 )
 
-                st.code(str(e))
+                st.code(
+                    str(e)
+                )
 
     st.markdown(
         '</div>',
@@ -852,7 +807,7 @@ if mode == "👤 Enumerator":
 
 
     # ========================================================
-    # SEARCH NOT DONE
+    # NO SEARCH YET
     # ========================================================
 
     if (
@@ -861,14 +816,15 @@ if mode == "👤 Enumerator":
     ):
 
         st.info(
-            "👆 Select an Enumerator and click SEARCH to view the full details."
+            "👆 Select an Enumerator and click SEARCH to view the full report."
         )
 
         st.stop()
 
 
     # ========================================================
-    # SELECTED ENUMERATOR CHANGED
+    # IF DROPDOWN CHANGED
+    # SEARCH AGAIN
     # ========================================================
 
     if (
@@ -886,25 +842,26 @@ if mode == "👤 Enumerator":
 
 
     # ========================================================
-    # RECORD
+    # GET RECORD
     # ========================================================
 
     record = st.session_state[
         "searched_record"
     ]
 
+
     current_status = get_value(
         record,
         "STATUS"
     ).upper()
 
-    if not current_status:
 
+    if not current_status:
         current_status = "NOT STARTED"
 
 
     # ========================================================
-    # STATUS
+    # STATUS BANNER
     # ========================================================
 
     if current_status == "COMPLETED":
@@ -942,15 +899,16 @@ if mode == "👤 Enumerator":
 
 
     # ========================================================
-    # FULL ENUMERATOR REPORT
+    # FULL ENUMERATOR DETAILS
     # ========================================================
 
     st.markdown(
         '<div class="section-title">'
-        '📋 Enumerator Full Details'
+        '📋 Enumerator Full Report'
         '</div>',
         unsafe_allow_html=True
     )
+
 
     st.markdown(
         '<div class="report-card">',
@@ -959,7 +917,7 @@ if mode == "👤 Enumerator":
 
 
     # --------------------------------------------------------
-    # HLB / CIRCLE
+    # HLB + CIRCLE
     # --------------------------------------------------------
 
     c1, c2 = st.columns(2)
@@ -975,16 +933,14 @@ if mode == "👤 Enumerator":
             </div>
 
             <div class="info-value">
-            {get_value(
-                record,
-                HLB_COLUMN
-            )}
+            {get_value(record, HLB_COLUMN)}
             </div>
 
             </div>
             """,
             unsafe_allow_html=True
         )
+
 
     with c2:
 
@@ -997,10 +953,7 @@ if mode == "👤 Enumerator":
             </div>
 
             <div class="info-value">
-            {get_value(
-                record,
-                "CIRCLE NUMBER"
-            )}
+            {get_value(record, "CIRCLE NUMBER")}
             </div>
 
             </div>
@@ -1010,7 +963,7 @@ if mode == "👤 Enumerator":
 
 
     # --------------------------------------------------------
-    # VILLAGE / ENUMERATOR MOBILE
+    # VILLAGE + ENUMERATOR MOBILE
     # --------------------------------------------------------
 
     c1, c2 = st.columns(2)
@@ -1026,16 +979,14 @@ if mode == "👤 Enumerator":
             </div>
 
             <div class="info-value">
-            {get_value(
-                record,
-                "VILLAGE NAME"
-            )}
+            {get_value(record, "VILLAGE NAME")}
             </div>
 
             </div>
             """,
             unsafe_allow_html=True
         )
+
 
     with c2:
 
@@ -1048,10 +999,7 @@ if mode == "👤 Enumerator":
             </div>
 
             <div class="info-value">
-            📱 {get_value(
-                record,
-                "ENUMERATOR MOBILE NUMBER"
-            )}
+            📱 {get_value(record, "ENUMERATOR MOBILE NUMBER")}
             </div>
 
             </div>
@@ -1111,10 +1059,27 @@ if mode == "👤 Enumerator":
 
 
     # --------------------------------------------------------
-    # STATUS / PENDING
+    # STATUS + PENDING
     # --------------------------------------------------------
 
+    try:
+
+        current_pending = int(
+            float(
+                get_value(
+                    record,
+                    "PENDING"
+                ) or 0
+            )
+        )
+
+    except Exception:
+
+        current_pending = 0
+
+
     c1, c2 = st.columns(2)
+
 
     with c1:
 
@@ -1135,22 +1100,8 @@ if mode == "👤 Enumerator":
             unsafe_allow_html=True
         )
 
+
     with c2:
-
-        try:
-
-            current_pending = int(
-                float(
-                    get_value(
-                        record,
-                        "PENDING"
-                    ) or 0
-                )
-            )
-
-        except Exception:
-
-            current_pending = 0
 
         st.markdown(
             f"""
@@ -1286,6 +1237,18 @@ if mode == "👤 Enumerator":
             "🔒 This Enumerator is COMPLETED and LOCKED."
         )
 
+        completed_date = get_value(
+            record,
+            "COMPLETED DATE"
+        )
+
+        if completed_date:
+
+            st.info(
+                f"Completed Date: {completed_date}"
+            )
+
+
     else:
 
         st.markdown(
@@ -1295,11 +1258,13 @@ if mode == "👤 Enumerator":
             unsafe_allow_html=True
         )
 
+
         status_options = [
             "NOT STARTED",
             "IN PROGRESS",
             "COMPLETED"
         ]
+
 
         try:
 
@@ -1315,7 +1280,7 @@ if mode == "👤 Enumerator":
 
 
         status = st.selectbox(
-            "Current Status",
+            "Status",
             status_options,
             index=default_index,
             key="update_status"
@@ -1346,15 +1311,15 @@ if mode == "👤 Enumerator":
             ),
             height=110,
             placeholder=(
-                "Example:\n"
-                "150 houses completed.\n"
-                "20 houses pending.\n"
-                "Door locked - 5.\n"
-                "Absent - 3."
+                "Enter detailed reason for pending..."
             ),
             key="update_remarks"
         )
 
+
+        # ====================================================
+        # SAVE
+        # ====================================================
 
         if st.button(
             "💾 SAVE ENUMERATION UPDATE",
@@ -1362,16 +1327,17 @@ if mode == "👤 Enumerator":
             width="stretch"
         ):
 
-            # ------------------------------------------------
-            # VALIDATION
-            # ------------------------------------------------
+
+            # -----------------------------------------------
+            # IN PROGRESS VALIDATION
+            # -----------------------------------------------
 
             if status == "IN PROGRESS":
 
                 if pending <= 0:
 
                     st.error(
-                        "⚠️ Please enter Pending Count."
+                        "⚠️ Pending Count is required."
                     )
 
                     st.stop()
@@ -1380,53 +1346,61 @@ if mode == "👤 Enumerator":
                 if not remarks.strip():
 
                     st.error(
-                        "⚠️ Remarks are compulsory for IN PROGRESS."
+                        "⚠️ Remarks are required for IN PROGRESS."
                     )
 
                     st.stop()
 
+
+            # -----------------------------------------------
+            # COMPLETED
+            # -----------------------------------------------
 
             if status == "COMPLETED":
 
                 pending = 0
 
 
-            # ------------------------------------------------
+            # -----------------------------------------------
             # PAYLOAD
-            # ------------------------------------------------
+            # -----------------------------------------------
 
             payload = {
 
                 "hlb":
-                    selected,
+                selected,
 
                 "circle":
-                    get_value(
-                        record,
-                        "CIRCLE NUMBER"
-                    ),
+                get_value(
+                    record,
+                    "CIRCLE NUMBER"
+                ),
 
                 "enumerator":
-                    selected,
+                selected,
 
                 "status":
-                    status,
+                status,
 
                 "pending":
-                    pending,
+                pending,
 
                 "expected_date":
-                    expected_date.strftime(
-                        "%d-%m-%Y"
-                    ),
+                expected_date.strftime(
+                    "%d-%m-%Y"
+                ),
 
                 "remarks":
-                    remarks.strip()
+                remarks.strip()
             }
 
 
+            # -----------------------------------------------
+            # SEND
+            # -----------------------------------------------
+
             with st.spinner(
-                "💾 Saving data to Google Sheet..."
+                "💾 Saving to Google Sheet..."
             ):
 
                 try:
@@ -1441,10 +1415,12 @@ if mode == "👤 Enumerator":
                     ):
 
                         st.success(
-                            "✅ Data successfully saved."
+                            "✅ Data successfully saved to Google Sheet."
                         )
 
+
                         st.cache_data.clear()
+
 
                         st.session_state.pop(
                             "searched_enumerator",
@@ -1456,7 +1432,9 @@ if mode == "👤 Enumerator":
                             None
                         )
 
+
                         st.rerun()
+
 
                     else:
 
@@ -1470,6 +1448,7 @@ if mode == "👤 Enumerator":
                                 "Unknown error"
                             )
                         )
+
 
                 except Exception as e:
 
@@ -1487,6 +1466,7 @@ if mode == "👤 Enumerator":
     # ========================================================
 
     st.divider()
+
 
     st.markdown(
         '<div class="section-title">'
@@ -1507,10 +1487,11 @@ if mode == "👤 Enumerator":
 
 
     # ========================================================
-    # SUMMARY CARDS
+    # SUMMARY
     # ========================================================
 
     c1, c2, c3 = st.columns(3)
+
 
     with c1:
 
@@ -1531,6 +1512,7 @@ if mode == "👤 Enumerator":
             unsafe_allow_html=True
         )
 
+
     with c2:
 
         st.markdown(
@@ -1549,6 +1531,7 @@ if mode == "👤 Enumerator":
             """,
             unsafe_allow_html=True
         )
+
 
     with c3:
 
@@ -1572,6 +1555,7 @@ if mode == "👤 Enumerator":
 
     c1, c2 = st.columns(2)
 
+
     with c1:
 
         st.markdown(
@@ -1590,6 +1574,7 @@ if mode == "👤 Enumerator":
             """,
             unsafe_allow_html=True
         )
+
 
     with c2:
 
@@ -1612,14 +1597,14 @@ if mode == "👤 Enumerator":
 
 
     # ========================================================
-    # PROGRESS BAR
+    # PROGRESS
     # ========================================================
 
     st.markdown(
         f"""
         <div style="
         text-align:center;
-        margin-top:15px;
+        margin-top:16px;
         font-size:17px;
         font-weight:900;
         ">
@@ -1666,6 +1651,7 @@ if mode == "👤 Enumerator":
     fig.update_traces(
         textinfo="label+percent",
         textposition="inside",
+
         hovertemplate=(
             "<b>%{label}</b>"
             "<br>Enumerator: %{value}"
@@ -1678,7 +1664,7 @@ if mode == "👤 Enumerator":
 
         title={
             "text":
-                "👥 Enumerator Status",
+            "👥 Enumerator Status",
             "x": 0.5,
             "xanchor": "center"
         },
@@ -1717,6 +1703,7 @@ if mode == "👤 Enumerator":
 
     st.divider()
 
+
     st.markdown(
         '<div class="section-title">'
         '📋 Enumerator Status Report'
@@ -1725,14 +1712,14 @@ if mode == "👤 Enumerator":
     )
 
 
-    search_table = st.text_input(
+    table_search = st.text_input(
         "🔎 Search HLB / Enumerator / Village",
         key="enum_table_search"
     )
 
 
     table_status = st.selectbox(
-        "Filter by Status",
+        "Filter Status",
         [
             "ALL",
             "COMPLETED",
@@ -1746,7 +1733,7 @@ if mode == "👤 Enumerator":
     display_df = df.copy()
 
 
-    if search_table:
+    if table_search:
 
         mask = (
             display_df
@@ -1754,7 +1741,7 @@ if mode == "👤 Enumerator":
             .apply(
                 lambda row:
                 row.str.contains(
-                    search_table,
+                    table_search,
                     case=False,
                     na=False
                 ).any(),
@@ -1853,6 +1840,7 @@ else:
             "Admin Username"
         )
 
+
         password = st.text_input(
             "Admin Password",
             type="password"
@@ -1891,17 +1879,17 @@ else:
 
     c1, c2 = st.columns([5, 1])
 
+
     with c1:
 
         st.success(
             "🔓 Admin Dashboard"
         )
 
+
     with c2:
 
-        if st.button(
-            "Logout"
-        ):
+        if st.button("Logout"):
 
             st.session_state.admin_logged_in = False
 
@@ -1932,19 +1920,25 @@ else:
 
     c1, c2, c3 = st.columns(3)
 
+
     with c1:
+
         st.metric(
             "👥 TOTAL ENUMERATOR",
             total
         )
 
+
     with c2:
+
         st.metric(
             "🟢 COMPLETED",
             completed
         )
 
+
     with c3:
+
         st.metric(
             "📌 TOTAL PENDING",
             total_pending
@@ -1953,13 +1947,17 @@ else:
 
     c1, c2 = st.columns(2)
 
+
     with c1:
+
         st.metric(
             "🟡 IN PROGRESS",
             in_progress
         )
 
+
     with c2:
+
         st.metric(
             "🔴 NOT STARTED",
             not_started
@@ -2019,9 +2017,10 @@ else:
 
 
     admin_fig.update_layout(
+
         title={
             "text":
-                "👥 Enumerator Status",
+            "👥 Enumerator Status",
             "x": 0.5
         },
 
@@ -2046,10 +2045,11 @@ else:
 
 
     # ========================================================
-    # ADMIN FULL REPORT
+    # ADMIN REPORT
     # ========================================================
 
     st.divider()
+
 
     st.markdown(
         '<div class="section-title">'
@@ -2158,6 +2158,7 @@ else:
     # ========================================================
 
     st.divider()
+
 
     st.markdown(
         "### 📥 Export Report"
