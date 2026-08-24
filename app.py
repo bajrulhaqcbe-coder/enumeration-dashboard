@@ -81,7 +81,7 @@ st.markdown(
     .update-title {
         font-size: 28px;
         font-weight: 700;
-        margin-top: 10px;
+        margin-top: 5px;
         margin-bottom: 15px;
     }
 
@@ -116,11 +116,18 @@ def load_google_sheet():
 
     except Exception as e:
 
-        st.error("Google Sheet data could not be loaded.")
+        st.error(
+            "Google Sheet data could not be loaded."
+        )
+
         st.code(str(e))
 
         return pd.DataFrame()
 
+
+# ============================================================
+# LOAD DATA
+# ============================================================
 
 df = load_google_sheet()
 
@@ -131,7 +138,10 @@ df = load_google_sheet()
 
 if df.empty:
 
-    st.error("No data found in Google Sheet.")
+    st.error(
+        "No data found in Google Sheet."
+    )
+
     st.stop()
 
 
@@ -150,7 +160,7 @@ if HLB_COLUMN not in df.columns:
 
 
 # ============================================================
-# STATUS NORMALIZATION
+# NORMALIZE STATUS
 # ============================================================
 
 if "STATUS" not in df.columns:
@@ -179,15 +189,21 @@ df.loc[
 total = len(df)
 
 completed = len(
-    df[df["STATUS"] == "COMPLETED"]
+    df[
+        df["STATUS"] == "COMPLETED"
+    ]
 )
 
 in_progress = len(
-    df[df["STATUS"] == "IN PROGRESS"]
+    df[
+        df["STATUS"] == "IN PROGRESS"
+    ]
 )
 
 not_started = len(
-    df[df["STATUS"] == "NOT STARTED"]
+    df[
+        df["STATUS"] == "NOT STARTED"
+    ]
 )
 
 
@@ -224,14 +240,19 @@ progress_percentage = (
 # HELPER
 # ============================================================
 
-def get_value(record, column):
+def get_record_value(record, column):
 
-    if column not in df.columns:
+    if column not in record:
+
         return ""
 
-    value = record[column]
+    value = record.get(
+        column,
+        ""
+    )
 
     if pd.isna(value):
+
         return ""
 
     return str(value).strip()
@@ -251,7 +272,8 @@ def send_update(payload):
         APPS_SCRIPT_URL,
         data=data,
         headers={
-            "Content-Type": "application/json"
+            "Content-Type":
+                "application/json"
         },
         method="POST"
     )
@@ -273,7 +295,7 @@ def send_update(payload):
             response_text
         )
 
-    except:
+    except Exception:
 
         return {
             "success": False,
@@ -384,10 +406,6 @@ def show_enumerator_status():
 
     st.divider()
 
-    # ========================================================
-    # SEARCH
-    # ========================================================
-
     st.markdown(
         "### 🔎 Enumerator Search & Filter"
     )
@@ -417,7 +435,7 @@ def show_enumerator_status():
     display_df = df.copy()
 
     # ========================================================
-    # SEARCH FILTER
+    # SEARCH
     # ========================================================
 
     if search:
@@ -488,7 +506,8 @@ def show_enumerator_status():
     ]
 
     table_columns = [
-        c for c in table_columns
+        c
+        for c in table_columns
         if c in display_df.columns
     ]
 
@@ -520,8 +539,8 @@ def show_enumerator_update():
     )
 
     st.info(
-        "Select your HLB / Enumerator and update the "
-        "current enumeration progress."
+        "Select HLB / Enumerator and click "
+        "🔍 SEARCH to load the latest Google Sheet data."
     )
 
     # ========================================================
@@ -536,7 +555,8 @@ def show_enumerator_update():
     )
 
     enumerators = [
-        x for x in enumerators
+        x
+        for x in enumerators
         if x
     ]
 
@@ -547,36 +567,199 @@ def show_enumerator_update():
     )
 
     # ========================================================
-    # SELECTED RECORD
+    # SEARCH BUTTON
     # ========================================================
 
-    selected_rows = df[
-        df[HLB_COLUMN]
-        .astype(str)
-        .str.strip()
-        == selected
-    ]
+    if st.button(
+        "🔍 SEARCH",
+        type="primary",
+        width="stretch",
+        key="search_enumerator"
+    ):
 
-    if selected_rows.empty:
+        # ----------------------------------------------------
+        # CLEAR OLD CACHE
+        # ----------------------------------------------------
 
-        st.error(
-            "Enumerator not found."
+        st.cache_data.clear()
+
+        # ----------------------------------------------------
+        # LOAD LATEST GOOGLE SHEET
+        # ----------------------------------------------------
+
+        with st.spinner(
+            "🔄 Loading latest data from Google Sheet..."
+        ):
+
+            try:
+
+                latest_df = pd.read_csv(
+                    CSV_URL
+                )
+
+                latest_df = (
+                    latest_df
+                    .dropna(how="all")
+                )
+
+                latest_df.columns = (
+                    latest_df.columns
+                    .astype(str)
+                    .str.strip()
+                )
+
+                latest_df = (
+                    latest_df
+                    .fillna("")
+                )
+
+                # --------------------------------------------
+                # STATUS
+                # --------------------------------------------
+
+                if "STATUS" not in latest_df.columns:
+
+                    latest_df["STATUS"] = (
+                        "NOT STARTED"
+                    )
+
+                latest_df["STATUS"] = (
+                    latest_df["STATUS"]
+                    .astype(str)
+                    .str.strip()
+                    .str.upper()
+                )
+
+                latest_df.loc[
+                    latest_df["STATUS"].isin(
+                        ["", "NAN"]
+                    ),
+                    "STATUS"
+                ] = "NOT STARTED"
+
+                # --------------------------------------------
+                # CHECK HLB COLUMN
+                # --------------------------------------------
+
+                if HLB_COLUMN not in latest_df.columns:
+
+                    st.error(
+                        f"Column not found: "
+                        f"{HLB_COLUMN}"
+                    )
+
+                    return
+
+                # --------------------------------------------
+                # FIND SELECTED ENUMERATOR
+                # --------------------------------------------
+
+                selected_rows = latest_df[
+                    latest_df[HLB_COLUMN]
+                    .astype(str)
+                    .str.strip()
+                    == selected
+                ]
+
+                if selected_rows.empty:
+
+                    st.error(
+                        "❌ Enumerator not found "
+                        "in Google Sheet."
+                    )
+
+                    return
+
+                # --------------------------------------------
+                # SAVE SEARCH RESULT
+                # --------------------------------------------
+
+                st.session_state[
+                    "searched_enumerator"
+                ] = selected
+
+                st.session_state[
+                    "searched_record"
+                ] = (
+                    selected_rows
+                    .iloc[0]
+                    .to_dict()
+                )
+
+                st.success(
+                    "✅ Latest Google Sheet data "
+                    "loaded successfully."
+                )
+
+            except Exception as e:
+
+                st.error(
+                    "❌ Error loading Google Sheet."
+                )
+
+                st.code(
+                    str(e)
+                )
+
+                return
+
+    # ========================================================
+    # DATA SHOW ONLY AFTER SEARCH
+    # ========================================================
+
+    if (
+        "searched_enumerator"
+        not in st.session_state
+    ):
+
+        st.info(
+            "👆 Select Enumerator and click "
+            "🔍 SEARCH."
         )
 
         return
 
-    record = selected_rows.iloc[0]
+    # ========================================================
+    # IF USER CHANGED ENUMERATOR
+    # ========================================================
 
-    current_status = get_value(
-        record,
+    if (
+        st.session_state[
+            "searched_enumerator"
+        ]
+        != selected
+    ):
+
+        st.warning(
+            "⚠️ Enumerator changed. "
+            "Please click 🔍 SEARCH again."
+        )
+
+        return
+
+    # ========================================================
+    # GET SEARCHED RECORD
+    # ========================================================
+
+    searched_record = st.session_state[
+        "searched_record"
+    ]
+
+    # ========================================================
+    # CURRENT STATUS
+    # ========================================================
+
+    current_status = get_record_value(
+        searched_record,
         "STATUS"
     ).upper()
 
     if not current_status:
+
         current_status = "NOT STARTED"
 
     # ========================================================
-    # CURRENT STATUS
+    # CURRENT STATUS DISPLAY
     # ========================================================
 
     if current_status == "COMPLETED":
@@ -598,7 +781,7 @@ def show_enumerator_update():
         )
 
     # ========================================================
-    # DETAILS
+    # ENUMERATOR DETAILS
     # ========================================================
 
     st.markdown(
@@ -618,8 +801,8 @@ def show_enumerator_update():
 
         st.text_input(
             "Circle Number",
-            value=get_value(
-                record,
+            value=get_record_value(
+                searched_record,
                 "CIRCLE NUMBER"
             ),
             disabled=True,
@@ -628,8 +811,8 @@ def show_enumerator_update():
 
         st.text_input(
             "Supervisor Name & Mobile",
-            value=get_value(
-                record,
+            value=get_record_value(
+                searched_record,
                 "SUPERVISOR NAME & MOBILE NUMBER"
             ),
             disabled=True,
@@ -638,8 +821,8 @@ def show_enumerator_update():
 
         st.text_input(
             "Enumerator Mobile",
-            value=get_value(
-                record,
+            value=get_record_value(
+                searched_record,
                 "ENUMERATOR MOBILE NUMBER"
             ),
             disabled=True,
@@ -650,8 +833,8 @@ def show_enumerator_update():
 
         st.text_input(
             "Village Name",
-            value=get_value(
-                record,
+            value=get_record_value(
+                searched_record,
                 "VILLAGE NAME"
             ),
             disabled=True,
@@ -660,8 +843,8 @@ def show_enumerator_update():
 
         st.text_area(
             "HLB Description",
-            value=get_value(
-                record,
+            value=get_record_value(
+                searched_record,
                 "HLB DESCRIPTION"
             ),
             disabled=True,
@@ -678,8 +861,8 @@ def show_enumerator_update():
             "🔒 This Enumerator is COMPLETED and LOCKED."
         )
 
-        completed_date = get_value(
-            record,
+        completed_date = get_record_value(
+            searched_record,
             "COMPLETED DATE"
         )
 
@@ -689,8 +872,8 @@ def show_enumerator_update():
                 f"Completed Date: {completed_date}"
             )
 
-        remarks = get_value(
-            record,
+        remarks = get_record_value(
+            searched_record,
             "REMARKS"
         )
 
@@ -707,7 +890,7 @@ def show_enumerator_update():
         return
 
     # ========================================================
-    # UPDATE FORM
+    # UPDATE ENUMERATION
     # ========================================================
 
     st.markdown(
@@ -715,13 +898,9 @@ def show_enumerator_update():
     )
 
     status_options = [
-
         "NOT STARTED",
-
         "IN PROGRESS",
-
         "COMPLETED"
-
     ]
 
     try:
@@ -747,24 +926,20 @@ def show_enumerator_update():
     # PENDING
     # ========================================================
 
-    current_pending = 0
+    try:
 
-    if "PENDING" in df.columns:
-
-        try:
-
-            current_pending = int(
-                float(
-                    get_value(
-                        record,
-                        "PENDING"
-                    ) or 0
-                )
+        current_pending = int(
+            float(
+                get_record_value(
+                    searched_record,
+                    "PENDING"
+                ) or 0
             )
+        )
 
-        except:
+    except Exception:
 
-            current_pending = 0
+        current_pending = 0
 
     pending = st.number_input(
         "Pending Count",
@@ -778,8 +953,8 @@ def show_enumerator_update():
     # EXPECTED DATE
     # ========================================================
 
-    existing_expected = get_value(
-        record,
+    existing_expected = get_record_value(
+        searched_record,
         "EXPECTED DATE"
     )
 
@@ -789,12 +964,14 @@ def show_enumerator_update():
 
         try:
 
-            expected_default = pd.to_datetime(
-                existing_expected,
-                dayfirst=True
-            ).date()
+            expected_default = (
+                pd.to_datetime(
+                    existing_expected,
+                    dayfirst=True
+                ).date()
+            )
 
-        except:
+        except Exception:
 
             expected_default = date.today()
 
@@ -808,8 +985,8 @@ def show_enumerator_update():
     # REMARKS
     # ========================================================
 
-    current_remarks = get_value(
-        record,
+    current_remarks = get_record_value(
+        searched_record,
         "REMARKS"
     )
 
@@ -876,8 +1053,8 @@ def show_enumerator_update():
                 selected,
 
             "circle":
-                get_value(
-                    record,
+                get_record_value(
+                    searched_record,
                     "CIRCLE NUMBER"
                 ),
 
@@ -901,11 +1078,11 @@ def show_enumerator_update():
         }
 
         # ----------------------------------------------------
-        # SEND TO GOOGLE SHEET
+        # SAVE TO GOOGLE SHEET
         # ----------------------------------------------------
 
         with st.spinner(
-            "Saving to Google Sheet..."
+            "💾 Saving to Google Sheet..."
         ):
 
             try:
@@ -919,8 +1096,27 @@ def show_enumerator_update():
                 ):
 
                     st.success(
-                        "✅ SAVE OK — Google Sheet Updated Successfully."
+                        "✅ SAVE OK — "
+                        "Google Sheet Updated Successfully."
                     )
+
+                    # ----------------------------------------
+                    # CLEAR SEARCHED DATA
+                    # ----------------------------------------
+
+                    st.session_state.pop(
+                        "searched_enumerator",
+                        None
+                    )
+
+                    st.session_state.pop(
+                        "searched_record",
+                        None
+                    )
+
+                    # ----------------------------------------
+                    # CLEAR CACHE
+                    # ----------------------------------------
 
                     st.cache_data.clear()
 
@@ -960,6 +1156,7 @@ st.sidebar.title(
 
 st.sidebar.markdown("---")
 
+
 mode = st.sidebar.radio(
     "Select Mode",
     [
@@ -968,12 +1165,27 @@ mode = st.sidebar.radio(
     ]
 )
 
+
+# ============================================================
+# REFRESH DATA
+# ============================================================
+
 if st.sidebar.button(
     "🔄 Refresh Data",
     width="stretch"
 ):
 
     st.cache_data.clear()
+
+    st.session_state.pop(
+        "searched_enumerator",
+        None
+    )
+
+    st.session_state.pop(
+        "searched_record",
+        None
+    )
 
     st.rerun()
 
@@ -1004,8 +1216,7 @@ st.markdown(
 if mode == "👤 Enumerator":
 
     # ========================================================
-    # 1. ENUMERATOR UPDATE
-    #    THIS IS NOW DIRECTLY BELOW THE TITLE
+    # 1. ENUMERATOR UPDATE - TOP
     # ========================================================
 
     show_enumerator_update()
@@ -1087,7 +1298,7 @@ else:
         st.stop()
 
     # ========================================================
-    # ADMIN DASHBOARD
+    # ADMIN HEADER
     # ========================================================
 
     a1, a2 = st.columns(
@@ -1123,7 +1334,7 @@ else:
     show_enumerator_status()
 
     # ========================================================
-    # DOWNLOAD REPORT
+    # EXPORT REPORT
     # ========================================================
 
     st.divider()
